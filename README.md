@@ -48,7 +48,12 @@ Tested On
 		- Ubuntu 12.04
 		- Windows 7 x64
 
-
+To Do
+=========
+		- Implement Cuckoo API
+		- Finish the VT Function
+		- Timer for the IMAP / POP Feeds
+		- More reports / trends.
 
 
 
