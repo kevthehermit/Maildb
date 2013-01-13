@@ -60,14 +60,12 @@ class Maildatabase:
 		return taskList 
 
 	def lastLine(self):
-		key = self.cursor.execute("SELECT * from sqlite_sequence WHERE rowid=1").fetchone()
-		return key.seq
-
-	'''def lastLine(self):
-		for id in self.cursor.execute('SELECT msg_id FROM main ORDER BY msg_id DESC limit 1'):
-			line = id.msg_id		
-			return line'''
-
+		try:
+			key = self.cursor.execute("SELECT * from sqlite_sequence WHERE rowid=1").fetchone()
+			return key.seq
+		except:
+			pass
+			
 	def msgHeaders(self, msg_id):
 		msgHead = self.cursor.execute('SELECT * FROM header WHERE msg_id=?', (msg_id,)).fetchall()
 		cursor.close()

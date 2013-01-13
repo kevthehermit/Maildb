@@ -72,8 +72,9 @@ class imapMail():
 				msgFile.write(msg)
 				msgFile.write("\n")
 			msgFile.close()
-			lastPath = db.lastLine()
+			
 			try: # this try means an empty db file wont break it
+				lastPath = db.lastLine()
 				newPath = str(lastPath + 1) # will be used to set the database and match it to a physical location
 			except:
 				newPath = '1'

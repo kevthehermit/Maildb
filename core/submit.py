@@ -26,9 +26,10 @@ class emlSubmit():
 	def submit(self, comment):
 		for emlfile in os.listdir(transferDir): #Run for each email file
 			from core.parse import emlParse
-			lastPath = db.lastLine()
+			
 			print emlfile
 			try: # this try means an empty db file wont break it
+				lastPath = db.lastLine()
 				newPath = str(lastPath + 1) # will be used to set the database and match it to a physical location
 			except:
 				newPath = '1'
@@ -99,8 +100,9 @@ class emlSubmit():
 	            new.close()
 	            newFile = "newFile.eml"
 	            from core.parse import emlParse
-	            lastPath = db.lastLine()
+	            
 	            try: # this try means an empty db file wont break it
+					lastPath = db.lastLine()
 	                newPath = str(lastPath + 1) # will be used to set the database and match it to a physical location
 
 	            except:
@@ -123,8 +125,9 @@ class emlSubmit():
 	    
 	def submithttp(self, pcapfile, comment):
 
-		lastPath = db.lastLine()			
+					
 		try: # this try means an empty db file wont break it
+			lastPath = db.lastLine()
 			newPath = str(lastPath + 1) # will be used to set the database and match it to a physical location
 		except:
 			newPath = '1'
@@ -140,8 +143,9 @@ class emlSubmit():
 		return newPath
 
 	def submitTask(self, taskFile, comment):
-		lastPath = db.lastLine()			
+					
 		try: # this try means an empty db file wont break it
+			lastPath = db.lastLine()
 			newPath = str(lastPath + 1) # will be used to set the database and match it to a physical location
 		except:
 			newPath = '1'

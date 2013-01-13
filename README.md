@@ -2,8 +2,9 @@ Maildb
 ======
 
         <p>Welcome to the Mail DataBase although it has expanded slightly now. Here is a list of all the things it does at the moment</p>
-		<h3>Submit email from PCAP, Text stream, IMAP or POP feeds.</h3>
+		<h3>Submit email from PCAP, Text stream, IMAP or POP servers</h3>
 		<li>The email parser will read the headers extracting the main fields
+		<li>Links, Img tags and Iframes sources extracted and listed
 		<li>Any attatchments are extracted, Hashed stored and scanned with Yara, optionally you can include options to scan with Clam AV and submit to Virus Total
 		<li>All the information extracted above is stored in to a SQLite Database as a Task.
 		<li>All files are stored for further analysis
@@ -47,6 +48,7 @@ Tested On
 
 		- Ubuntu 12.04
 		- Windows 7 x64
+
 
 To Do
 =========

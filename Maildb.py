@@ -265,7 +265,7 @@ def export():
 @route("/imap", method="POST")
 def imapFetch():
 	from core.common import cleanup
-	cleanup().cleartmp()
+	cleanup().cleartmp(transferDir)
 	context = {}
 	usr = request.forms.user
 	pwd = request.forms.password
