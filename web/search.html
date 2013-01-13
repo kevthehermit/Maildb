@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Search Page</%def>
+
+<%def name="head_tags()"></%def>
+<script src="/static/dropdown.js"></script>
+<h1>Search Page</h1>
+
+
+
+<form name="myform" action="/results" method="post" enctype="multipart/form-data">
+Search Term:<input type="text" name="Term" />
+Table:<select name="optone" size="1"
+onchange="setOptions(document.myform.optone.options
+[document.myform.optone.selectedIndex].value);">
+
+<option value=" " selected="selected"> </option>
+<option value="main">Main</option>
+<option value="header">Email Headers</option>
+<option value="hops">Email Hops</option>
+<option value="attatch">Attatchments</option>
+<option value="flows">Http Flows</option>
+<option value="streams">Http Sessions</option>
+<option value="yara">Yara</option>
+
+</select><br> <br>
+Column:<select name="opttwo" size="1">
+<option value=" " selected="selected">Please select one of the options above first</option>
+</select>
+<input type="submit" value="Submit" />
+</div></form>
+
+
+
+
+
+
+
+
+
+
+

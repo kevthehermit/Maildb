@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Welcome Screen</%def>
+
+<%def name="head_tags()"></%def>
+
+<h1>Welcome to the MAE interactive Signature Database</h1>
+
+<p>Use the forms below to submit your task.</p>
+<p>Use the Help Pages if you get stuck.</p>
+
+
+<p>Pcap or Email Stream</p>
+
+
+<form action="/submit" method="post" enctype="multipart/form-data">
+<input type="file" name="data" />
+Comment:<input type="text" name="comment" />
+<input type="submit" value="Submit" />
+</form>
+
+
+<p>IMAP Feed</p>
+
+<form action="/imap" method="post" enctype="multipart/form-data">
+Username:<input type="text" name="user" />
+Password:<input type="password" name="password" />
+Server:<input type="text" name="server" />
+Inbox:<input type="text" name="inbox" />
+<input type="submit" value="Submit" />
+
+
+Protocol:<select name="protocol" size="1"">
+
+
+<option value="pop">POP3</option>
+<option value="imap" selected="selected">IMAP</option>
+
+</form>
+
+
+
+
+
+
+
+

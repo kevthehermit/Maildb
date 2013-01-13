@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Admin Interface</%def>
+
+<%def name="head_tags()"></%def>
+
+
+	<body>
+		<h1>Admin Interface</h1>
+		<p><span style="color:#ff0000;">There are no Auth Or Confirmation Checks - Be carful what you click</span></p>
+		<p><a href="/admin?function=install" class="button">Install</a>&nbsp;- Sets up the folder structure and Required DB Tables if not already Set</p>
+		<p><a href="/admin?function=backup" class="button">Backup</a>&nbsp;- Erases all Stored Files and resets the Database to Default Values</p>
+		<p><a href="/admin?function=reset" class="button">Reset</a>- Archives the Database and associated Files</p>
+		
+		<form action="/admin" method="POST" name="msg_id" target="_blank">
+			<input name="msg_id" type="text" value="Task ID" /><input name="submit" type="submit" value="Delete Record"/>- Delete the record and any associated Files</form>
+		<p><strong>Log</strong></p>
+		<p><textarea cols="60" name="Log" rows="25" style="margin-left: 2px; margin-right: 2px; width: 765px;">
+% for line in logFile:
+${line}
+% endfor	
+		
+		</textarea></p>
+		<p>Save Log File</p>
+	</body>
+</html>

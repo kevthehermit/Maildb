@@ -1,0 +1,47 @@
+<%inherit file="base.mako" />
+
+<%def name="title()">Signature Information</%def>
+
+<%def name="head_tags()">
+
+<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>
+</%def>
+
+<h1>${info.Comment} Scanned on Date ${info.date_added}</h1>
+		
+
+			
+		<h3>Tasking</h3>
+		
+<p>Manual Task Submitted. Any Tasking Files can be found in the following Folder </p>
+<p>LInk to files here</p>
+<p>To add more files use the file submission form here</p>
+
+
+		
+		
+		<h3>Comments</h3>
+% for comment in comments:		
+		
+		<p>Title:  ${comment.title}</p>
+		<p>Comment: ${comment.freetext}</p>
+
+% endfor			
+<%
+next = int(msg_id) + 1
+prev = int(msg_id) - 1
+%>
+			<p style="text-align: center;">
+				<a href="/sig/${prev}"> Prev</a> | <a href="/review?ID=${msg_id}&flag=review" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Review</a>| <a href="/review?ID=${msg_id}&flag=event" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Event</a>| <a href="/review?ID=${msg_id}&flag=clear" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Clear</a>| <a href="/sig/${next}">Next</a></p>
+		
+		
+		

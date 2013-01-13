@@ -1,0 +1,121 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Help</%def>
+
+<%def name="head_tags()"></%def>
+
+<h1>HELP!</h1>
+<p>So you need some help....</p>
+
+<div id="menu">
+    <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#config">Configuration</a></li>
+        <li><a href="#import">Submitting Tasks</a></li>
+        <li><a href="#tasks">Viewing Tasks</a></li>
+        <li><a href="#sigs">Signature Page</a></li>
+        <li><a href="#report">Reports</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#decode">Decode Tools</a></li>
+        <li><a href="#admin">Admin Tools</a></li>
+    </ul>
+</div>
+        
+
+
+
+<div id="wrapper">
+
+    <div class="column">
+        <h2><a name="intro">Introduction</a></h2>
+        <p>Welcome to the Mail DataBase although it has expanded slightly now. Here is a list of all the things it does at the moment</p>
+		<h3>Submit email from PCAP, Text stream, IMAP or POP feeds.</h3>
+		<li>The email parser will read the headers extracting the main fields
+		<li>Any attatchments are extracted, Hashed stored and scanned with Yara, optionally you can include options to scan with Clam AV and submit to Virus Total
+		<li>All the information extracted above is stored in to a SQLite Database as a Task.
+		<li>All files are stored for further analysis
+		<li>Options to submit file attatchments to Sandboxs, Cuckoo or FireEyes, MAS
+		<h3>Http PCAP files</h3>
+		<li>Extract all the streams
+		<li>Parse the HTTP Headers
+		<li>Extract all the HTTP Objects and files
+		<li>Replicate the Server Path structure
+		<li> Write the Header data to the SQLite Database as a Task
+		<h3>Management System</h3>
+		<li>Micro management system allows you to track Tasks in the Database
+		<li>Add Comments to Tasks
+		<li>Set tasks as Reviewed, Events or Unchecked
+		<li>Generate, Weekly, Montly, Yearly reports on all Submitted tasks
+		<li>Trend analysis on all artefacts in the database
+
+    </div>
+    
+    <div class="column">
+        <h2><a name="config">Configuration</a></h2>
+		<p>The config file is used to store user defined variables, allowing you to change file paths, and enable / disable options</p>
+		<p>Most of the configuration settings use a 1 or a 0 to Enable or Disable options.</p>
+		<p>Here are the items that can be configured</p>
+		<li>transferDir This is the temporary directory where uplaoded files are stored before processing
+		<li>reportRoot, This is the directory that will store any files associated with a submitted task
+		<li>DBFile, This is the location of the SQLITE database file. This config setting will allow for otehr SQL varients in the future
+		<li>ProxyPort and SSLPort used for parsing the HTTP Traffic, if your not using a proxy use '0080' and '443'
+		<li>ssdeep, Enable or Disable SSDEEP Hashing
+		<li>clamscan and dblocation will set the Definition location and enable scanning of all attathments and http objects
+		<li>enableYara speaks for itself. emailSig and fileSig set the file location for your Yara Rules
+		<li>falsopos allows for a Yara Ruile File that contains known false postitives for quick review
+		<li>Virus Total Enabel and API
+		<li>Sandox needs updating to allwo for a more modular approach :)
+    </div>
+    
+    <div class="column">    
+        <h2><a name="import">Submitting Tasks</a></h2>
+		<h3>Emails</h3>
+		<p>Email Tasks can be submitted in one of the following formats
+		<li>PCAP File containing a single or multiple SMTP streams
+		<li> Text Stream containg RFC 882 or equivelent stream
+		<li>POP3 or IMAP Protocols, IMAP supports Defining a Folder, POP just process the Inbox.
+		<h3>HTTP Traffic</h3>
+		<p>Before submitting HTTP PCAP files it is important to ensure the Proxy Port settings are configured correctly in the Config File</p>
+		<p>The submitted file MUST be name http-xxxx.pcap, where xxxx can be any string.</p>
+		<p>There is currently NO progress bar to indicate the processing of HTTP traffic. This process can be time consuming for Large PCAP files.</p>
+		<h3>Other Tasking</h3>
+		<p>When submittign other Taskings. i.e. files that can not be parsed by the DB, First compress the files in to a single Zip, RAR, or tar.gz file.</p>
+		<p>The submitted file MUST be nameed Tasking-xxxx, where xxxx can be any string.</p>
+		<p>Submit the file using the upload form and add a comment appropriate to the Task. e.g Tasking-Department Name</p>
+
+		
+		<p>For all submitted tasks there is an optional field Called Comments. This can be used to add a Tag that is used as par tof the reporting process.
+ This tag uses the keyword 'Tasking' to produce reports. </p>
+		<p>Any other keyword can be used e.g. a Snort Rule Name that will be searchable using the search Options</p>
+		<p>Example 1: A snort Signature for an email </p>
+		<p>Example 2: Emails submitted from another source - 'Tasking-PhishingSamples'
+    </div>
+            
+    <div class="column">
+        <h2><a name="tasks">Viewing Tasks</a></h2>
+    </div>
+            
+    <div class="column">
+        <h2><a name="sigs">Signature Page</a></h2>
+    </div>
+            
+    <div class="column">
+        <h2><a name="report">Reports</a></h2>
+    </div>
+            
+    <div class="column">
+        <h2><a name="search">Search</a></h2>
+    </div>
+            
+    <div class="column">
+        <h2><a name="decode">Decode Tools</a></h2>
+    </div>
+            
+    <div class="column">
+        <h2><a name="admin">Admin Tools</a></h2>
+    </div>        
+
+</div>
+
+

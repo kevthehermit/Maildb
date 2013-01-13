@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">File Information</%def>
+
+<%def name="head_tags()">
+
+</%def>
+
+<h1>File Information for HostName Here</h1>
+
+
+
+
+
+<table border="1" width="1500">
+<tbody>
+<tr><td>path</td><td>referer</td><td>response</td><td>Credentials</td></tr>
+
+
+% for h in hostInfo:
+	<tr>
+		<td style="word-break: break-all">${h.Path}</td>
+		<td style="word-break: break-all">${h.Referer}</td>
+		<td>${h.Response}</td>
+		<td>${h.Proxy}</td>		
+	</tr>
+</tbody>
+
+
+
+</div>
+% endfor
+
+<div id="Dynamic">
+<p class="Title">Dynamic Analysis</p>
+
+</div>
+
+
+

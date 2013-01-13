@@ -1,0 +1,300 @@
+
+/* ######### Main CSS ######### */
+
+
+body {
+		font-size: 12pt;
+		color: black;
+		background-color: #E0E0E0;
+}
+
+
+	
+/* ############ Browse Rows Here ############# */
+
+table#browse {
+	width: 100%;
+	border-collapse: collapse;
+}
+#browse tr {
+	background-color: #eee;
+	border-top: 1px solid #fff;
+}
+#browse tr:hover {
+	background-color: #ccc;
+}
+#browse th {
+	font-size: 1.1em;
+	text-align: left;
+	padding-top: 5px;
+	background-color: #C0C0C0;
+	color: #ffffff;
+}
+#browse th, #browse td {
+	padding: 3px 5px;
+}
+#browse td:hover {
+	cursor: pointer;
+}
+
+#browse tr.true {
+	color: #000000;
+	background-color: #CC0000;
+}
+#browse tr.true:hover {
+	background-color: #CC3333;
+}
+
+#browse tr.false {
+	color: #000000;
+	background-color: #339900;
+}
+#browse tr.false:hover {
+	background-color: #33CC33;
+}
+
+#browse tr.yara {
+	color: #000000;
+	background-color: #996600;
+}
+#browse tr.yara:hover {
+	background-color: #999933;
+}
+/* ############ Sig Tables Here ############# */
+
+
+#sig {
+	width: 75%;
+	border-collapse:collapse;
+	table-layout: auto;
+	
+}
+
+#sig td, #sig th {
+	font-size: 1em;
+	border: 1px solid #C0C0C0;
+	padding: 3px 7px 2px 7px;
+}
+
+#sig th {
+	font-size: 1.1em;
+	text-align: left;
+	padding-top: 5px;
+	background-color: #C0C0C0;
+	color: #ffffff;
+}
+
+#sig tr.odd td {
+	color: #000000;
+	background-color: #E0E0E0;
+	
+}
+
+#sig tr.even td {
+	color: #000000;
+	background-color: #D0D0D0;
+}
+
+
+/* ############ Help Menu ############# */
+
+#menu {
+	width: 200px;
+	border-style: solid solid none solid;
+	border-color: #94AA74;
+	border-size: 1px;
+	border-width: 1px;
+	margin: 10px;
+}
+	
+#menu li a {
+	height: 32px;
+  	voice-family: "\"}\""; 
+  	voice-family: inherit;
+  	height: 24px;
+	text-decoration: none;
+}	
+	
+#menu li a:link, #menu li a:visited {
+	color: #5E7830;
+	display: block;
+	background: url(/static/menu1.gif);
+	padding: 8px 0 0 10px;
+}
+	
+#menu li a:hover {
+	color: #26370A;
+	background: url(/static/menu1.gif) 0 -32px;
+	padding: 8px 0 0 10px;
+}
+	
+#menu li a:active {
+	color: #26370A;
+	background: url(/static/menu1.gif) 0 -64px;
+	padding: 8px 0 0 10px;
+}
+#menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+/* ############ Alt Nav Bar ############# */
+	
+#nav {
+	float: left;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #ccc;
+	border-bottom: 1px solid #999;
+	font-size: 20px;
+}
+
+#nav li { 
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+	
+#nav a {
+	float: left;
+	display: block;
+	padding: 6px 30px 6px 5px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 90%;
+	color: #666;
+	background: #ccc url(/static/nav_slant.gif) no-repeat top right;
+}
+	
+#nav #nav-1 a {
+	padding-left: 20px;
+}
+	
+#nav a:hover {
+	color: #000;
+}
+
+/* more */
+	
+ul#more {
+	clear: left;
+	margin-top: 60px;
+}
+
+
+#title {
+    font-size: 30px;
+    color: red;
+    margin: 10px;
+
+}
+
+
+/* ############ Help Pages ############# */
+#help {
+    width: auto;
+    font: 15px;
+    margin: auto;
+    
+}
+
+.column {
+    width: auto;
+    padding: 20px;
+    border: 1px solid #fff;
+    
+}
+
+.column p {
+    font-size: 15px;
+    color: black;
+    
+} 
+
+.column h2 {
+    
+    font-size: 25px;
+    color: blue;
+
+}
+
+.column h3 {
+    
+    font-size: 15px;
+    color: red;
+
+}
+
+
+/* ############ Static ############# */   
+
+#Static{
+}
+
+.Title {
+	font: 20px;
+	color: black;
+}
+
+.descriptor {
+	font: 16px;
+	color: black;	
+}
+
+.info {
+	font: 15px;
+	color: red;
+}
+
+/* ############ Yara ############# */
+
+#Yara{
+}
+
+.Title {
+}
+
+.Rule {
+	font: 30px
+	color: red;
+}
+
+
+/* ############ Buttons ############# */
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #adaaad) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #adaaad 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#adaaad');
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #525052;
+	display:inline-block;
+	color:#383738;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:2px 18px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #adaaad), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #adaaad 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#adaaad', endColorstr='#ededed');
+	background-color:#adaaad;
+}.button:active {
+	position:relative;
+	top:1px;
+}
+
+
+

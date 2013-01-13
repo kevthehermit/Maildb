@@ -1,0 +1,121 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Main Report</%def>
+
+<%def name="head_tags()">
+
+<%
+	taskNames = x[0]
+	taskRev = x[1]
+	taskEv = x[2]
+	taskOut = x[3]
+	ntaskNames = x[4]
+	ntaskRev = x[5]
+	ntaskEv = x[6]
+	ntaskOut = x[7]
+%>
+<script src="/static/jquery.min.js"></script>
+
+
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'bar'
+            },
+            title: {
+                text: 'All Tasks'
+            },
+            xAxis: {
+                categories: [
+% for name in taskNames:
+                '${name}',
+% endfor
+% for name in ntaskNames:
+                '${name}',
+% endfor
+                ]
+            },
+            yAxis: {
+            	tickInterval: 1,
+                min: 0,
+                title: {
+                    text: 'No Of Tasks'
+                }
+            },
+            legend: {
+                backgroundColor: '#FFFFFF',
+                reversed: true
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'';
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+                series: [{
+                name: 'Outstanding',
+                data: [
+% for count in taskOut:                
+                ${count},
+% endfor
+% for count in ntaskOut:                
+                ${count},
+% endfor                
+                ]
+            }, {
+                name: 'Events',
+                data: [
+% for count in taskEv:                
+                ${count},
+% endfor
+% for count in ntaskEv:                
+                ${count},
+% endfor
+                ]
+            }, {
+                name: 'reviewed',
+                data: [
+% for count in taskRev:                
+                ${count},
+% endfor
+% for count in ntaskRev:                
+                ${count},
+% endfor                
+                ]
+            }]
+        });
+    });
+    
+});
+		</script>
+
+
+		
+</%def>
+
+
+
+<script type="text/javascript" src="/static/highcharts.js"></script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="container" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
+<br>
+

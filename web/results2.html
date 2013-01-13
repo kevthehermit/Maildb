@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">All Samples</%def>
+
+<%def name="head_tags()">
+<script src="/static/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+	$('#browse tr').click(function(){
+		var href = $(this).find("a").attr("href");
+		if(href) {
+			window.location = href;
+		}
+	});
+});
+</script>
+
+</%def>
+
+
+
+<h1>Search Results</h1>
+
+
+<table id="browse">
+<thead><tr><th>ID</th><th>Comment</th><th>MD5</th><th>Date Of Scan</th><th>No Of Attatch</th><th>Type</th><thead>
+
+<tbody>
+% for result in rows:
+	% if result[3] == 1:
+	<tr class="true">
+	% elif result[3] == 2:
+	<tr class="false">
+	% elif result[3] == 3:
+	<tr class="yara">
+	% else:
+	<tr>
+	% endif:
+		
+		
+		<td><a href="/sig/${result[0]}">${result[0]}</a></td>
+		<td>${result[5]}</td>
+		<td>${result[2]}</td>
+		<td>${result[1]}</td>
+		<td>${result[4]}</td>
+		<td>${result[6]}</td>
+	</tr>
+</tbody>
+% endfor
+

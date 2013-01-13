@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">All Samples</%def>
+
+<%def name="head_tags()">
+<script src="/static/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+	$('#browse tr').click(function(){
+		var href = $(this).find("a").attr("href");
+		if(href) {
+			window.location = href;
+		}
+	});
+});
+</script>
+
+</%def>
+
+
+
+<h1>Emails</h1>
+
+<table id="browse">
+<thead><tr><th>ID</th><th>Comment</th><th>MD5</th><th>Date Of Scan</th><th>No Of Attatch</th><th>Type</th><thead>
+
+<tbody>
+% for r in rows:
+	% if r.Revmatch == 1:
+	<tr class="true">
+	% elif r.Revmatch == 2:
+	<tr class="false">
+	% elif r.Revmatch == 3:
+	<tr class="yara">
+	% else:
+	<tr>
+	% endif:
+		
+		
+		<td><a href="/sig/${r.msg_id}">${r.msg_id}</a></td>
+		<td>${r.Comment}</td>
+		<td>${r.eml_md5}</td>
+		<td>${r.date_added}</td>
+		<td>${r.attCount}</td>
+		<td>${r.type}</td>
+	</tr>
+</tbody>
+% endfor
+<%
+next = int(offset) + int(limit)
+prev = int(offset) - int(limit)
+
+%>
+<p align="center"><a href="/browse?limit=${limit}&offset=${prev}">Next </a> | <a href="/browse?limit=${limit}&offset=${next}">Prev </a></p>
