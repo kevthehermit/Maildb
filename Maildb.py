@@ -73,9 +73,10 @@ def admin():
 	if request.query.function == "reset":
 		from core.admin_function import adFunction
 		adFunction().reset()
-	if request.query.function == "delete":
-		pass
-	logFile = open(os.path.join(MaildbRoot, "log.txt"))
+	if os.path.exists(os.path.join(MaildbRoot, "log.txt")):
+		logFile = open(os.path.join(MaildbRoot, "log.txt"))
+	else:
+		logFile = "*" # Lazy fix for an empty Log File
 	template = lookup.get_template("admin.html")
 	return template.render(logFile=logFile, **context)
 
