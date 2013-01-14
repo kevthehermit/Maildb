@@ -9,10 +9,12 @@ import os
 
 ##### Version #####
 
-version = '0.1.3'
+version = '0.1.4'
+development = True
 
 ##### Settings ######
 
+webPort = '7070'
 logEnable='1' # Log Errors
 
 ##### Locations ######

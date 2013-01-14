@@ -7,7 +7,7 @@ See the 'LICENSE' File for copying permission.
 
 import os
 import sys
-from config.config import DBFile, reportRoot, MaildbRoot, transferDir
+from config.config import DBFile, reportRoot, MaildbRoot, transferDir, webPort
 from db.db import Maildatabase
 from mako.template import Template
 from mako.lookup import TemplateLookup
@@ -315,7 +315,7 @@ def get_favicon():
 
 # set the interface and the port to run the application	
 if __name__ == "__main__":
-	run(host="0.0.0.0", port=7070, reloader=True)
+	run(host="0.0.0.0", port=webPort, reloader=True)
 	
 	
 	
