@@ -91,7 +91,7 @@ class emlParse(object):
 		except:
 			cc_add = msg.get('cc')
 		try:
-			bcc_add = re.sub('[<>]', '', msg.get('bcc'))
+			bcc_add = re.sub('[<>]', '', msg.get('Bcc'))
 		except:
 			bcc_add = msg.get('bcc')
 		sqlHeader = ( msg_id, dateLine, sender, addDomain, subjectLine, x_mailer, x_priority, message_id, cc_add, bcc_add, to_add)
@@ -202,6 +202,7 @@ class emlParse(object):
 				result = Scan().fileScan(filetoScan, md5Hash)
 				if result:
 					yaraMatch = '3'
+					match = '3'
 				else:
 					yaraMatch = '0'
 			# database stuff here
@@ -212,7 +213,7 @@ class emlParse(object):
 			except:
 				msg_id = '1'
 			db.cursor.execute('INSERT INTO attatch VALUES (?,?,?,?,?,?,?,?)', sqlAttatchments)
-			db.cursor.execute("UPDATE main SET 'attCount'=? WHERE msg_id=?", (counter, msg_id,))
+			db.cursor.execute("UPDATE main SET 'attCount'=?, 'Revmatch'=? WHERE msg_id=?", (counter, match, msg_id,))
 			db.conn.commit()
 
 			

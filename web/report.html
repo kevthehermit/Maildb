@@ -14,6 +14,12 @@
 	ntaskRev = x[5]
 	ntaskEv = x[6]
 	ntaskOut = x[7]
+	counts = x[8]
+	attExt = y[0]
+	countNonEv = y[1]
+	countEv = y[2]
+	total = y[3]
+
 %>
 <script src="/static/jquery.min.js"></script>
 
@@ -24,7 +30,7 @@ $(function () {
     $(document).ready(function() {
         chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'container',
+                renderTo: 'mainReport',
                 type: 'bar'
             },
             title: {
@@ -100,6 +106,67 @@ $(function () {
 		</script>
 
 
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'attReport',
+                type: 'bar'
+            },
+            title: {
+                text: 'File Attatchments'
+            },
+            xAxis: {
+                categories: [
+% for ext in attExt:
+                '${ext}',
+% endfor
+                ]
+            },
+            yAxis: {
+            	tickInterval: 1,
+                min: 0,
+                title: {
+                    text: 'No Of Tasks'
+                }
+            },
+            legend: {
+                backgroundColor: '#FFFFFF',
+                reversed: true
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'';
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+                series: [{
+                name: 'Non-Event',
+                data: [
+% for count in countNonEv:                
+                ${count},
+% endfor
+                ]
+            }, {
+                name: 'Event',
+                data: [
+% for count in countEv:                
+                ${count},
+% endfor                
+                ]
+            }]
+        });
+    });
+    
+});
+		</script>
 		
 </%def>
 
@@ -113,9 +180,6 @@ $(function () {
 <br>
 <br>
 <br>
+<div id="mainReport" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
 <br>
-<br>
-<br>
-<div id="container" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
-<br>
-
+<div id="attReport" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>

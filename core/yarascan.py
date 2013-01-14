@@ -55,7 +55,21 @@ class Scan():
 		return matches
 
 
-
+	def httpScan(self, scanhttp, md5Hash):
+		matches = []
+		try: #reset or emtpy DB willbreak without this
+			msg_id = str(db.lastLine() + 1)
+		except:
+			msg_id ='1'
+		
+		for match in fileRules.match(scanhttp):
+			matches.append({"name" : match.rule, "meta" : match.meta})
+		for m in matches:
+			yaraRule = m["name"]
+			yaraDesc = m["meta"]["description"]
+			db.cursor.execute("INSERT INTO yara (msg_id,md5,rule,description) VALUES (?,?,?,?)", (msg_id, md5Hash, yaraRule, yaraDesc))
+			db.conn.commit()						
+		return matches
 
 
 

@@ -6,10 +6,7 @@
 <%def name="head_tags()"></%def>
 
 <%
-	countall = stats[0]
-	topattatch = stats[2]
-	topdomain = stats[3]
-	topxmail = stats[4]
+
 %>
 
 
@@ -21,71 +18,14 @@
 		<form action="/report" enctype="multipart/form-data" method="post" name="mainReport" target="_self">
 			<input maxlength="10" name="reportDate" type="text" value="YYYY-MM-DD" /><input name="submit" type="submit" value="Create" />&nbsp;</form>
 		<h3>Statistics</h3>
-		<p>Total Number of Records: 125</p>
-		<p>Total number of Extracted Files: 248</p>
+		<p>Total Number of Records: ${stats[0]}</p>
+		<p>Total number of Signatures: ${stats[1]}</p>
+		<p>Total number of Taskings: ${stats[2]}</p>
+		<p>Reviewed: ${stats[5]}</p>
+		<p>Events: ${stats[3]}</p>
+		<p>Outstanding: ${stats[4]}</p>
 		
-	<span>
-		<table border="1" cellpadding="1" cellspacing="1" style="display: inline-block;">
-			<tbody>
-				<tr>
-					<td colspan="2">Attatchments</td>
-				</tr>
-				
-				%for row in topattatch:
-				<tr>
-					<td>${row.fileExt}</td>
-					<td>${row.counted}</td>
-				</tr>
-				% endfor
-				
-			</tbody>
-		</table>
-		<table border="1" cellpadding="1" cellspacing="1" style="display: inline-block;">
-			<tbody>
-				<tr>
-					<td colspan="2">Domain</td>
-				</tr>
-				
-				%for row in topdomain:
-				<tr>
-					<td>${row.domain}</td>
-					<td>${row.counted}</td>
-				</tr>
-				% endfor
-				
-			</tbody>
-		</table>
-	</span>
-		<p></p>
-	<span>
-		<table border="1" cellpadding="1" cellspacing="1" style="display: inline-block;">
-			<tbody>
-				<tr>
-					<td colspan="2">X Mailer</td>
-				</tr>
-				
-				%for row in topxmail:
-				<tr>
-					<td>${row.x_mailer}</td>
-					<td>${row.counted}</td>
-				</tr>
-				% endfor
-				
-			</tbody>
-		</table>
-		<p></p>
-		<table border="1" cellpadding="1" cellspacing="1" style="display: inline-block;">
-			<tbody>
-				<tr>
-					<td colspan="2">Yara Rules</td>
-				</tr>
-				<tr>
-					<td>rule here</td>
-					<td>count hree</td>
-				</tr>
-			</tbody>
-		</table>
-	</span>
+
 
 
 

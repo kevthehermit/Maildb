@@ -1,0 +1,12 @@
+Version 0.1.3
+Date 14 Jan 2013
+
+Changes
+
+*Yara Scans added to HTTP Files
+*Nicer Error when loading a non existing Task
+*Stats and Reports
+	*Reporting Module Improved
+	*Stats page Tables Replace with Basic counts
+	*More Graphs in the report page. to replace the now missing tables
+	*Couple More Bug Fixes

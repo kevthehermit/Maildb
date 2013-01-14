@@ -93,8 +93,7 @@ def adminPost():
 def stats():
 	context	= {}
 	stats = db.stats()
-	countall = stats[0]
-
+	print stats
 	template = lookup.get_template("stats.html")
 	return template.render(stats=stats, **context)
 		
@@ -120,12 +119,12 @@ def help():
 @route("/sig/<msg_id>")
 def sig(msg_id):
 
-	comments = db.viewComment(msg_id)	
 	info = db.msgInfo(msg_id)
-	print info.Comment
+	if info == None:
+		return "ID %s not found in database" % msg_id
+	comments = db.viewComment(msg_id)
 	if info.type == "mail":
-		headers, attatch, links, hops, yara = db.sigPage(msg_id)
-		#yara = db.yaraMail(msg_id)			
+		headers, attatch, links, hops, yara = db.sigPage(msg_id)			
 		text = os.path.join(MaildbRoot, "store", msg_id, "attatchments", "body.txt")
 		html = os.path.join(MaildbRoot, "store", msg_id, "attatchments", "htmlbody.txt")
 		import codecs
@@ -140,8 +139,10 @@ def sig(msg_id):
 	if info.type == "web":
 		flows = db.httpFlows(msg_id)
 		sessions = db.httpSessions(msg_id)
+		yara = db.yaraMail(msg_id)
+		print yara
 		template = lookup.get_template("http.html")
-		return template.render(msg_id=msg_id, flows=flows, info=info, sessions=sessions, comments=comments)
+		return template.render(msg_id=msg_id, flows=flows, info=info, sessions=sessions, comments=comments, yara=yara)
 	if info.type == "Task":
 		template = lookup.get_template("task.html")
 		return template.render(msg_id=msg_id, info=info, comments=comments)
@@ -227,8 +228,9 @@ def create_report():
 
 	from core.newReport import Reporting
 	x = Reporting().mainRep(repDate)
+	y = Reporting().attatchRep(repDate)
 	template = lookup.get_template("report.html")
-	return template.render(x=x)
+	return template.render(x=x, y=y)
 
 ### This will be for the file pages	
     

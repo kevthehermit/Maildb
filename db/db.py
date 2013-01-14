@@ -95,6 +95,7 @@ class Maildatabase:
 
 
 	def yaraMail(self, msg_id):
+		print msg_id
 		result = self.cursor.execute('SELECT * FROM yara WHERE msg_id=?', (msg_id,)).fetchall()
 		return result
 
@@ -136,15 +137,15 @@ class Maildatabase:
 
 
 	def stats(self):
-		countall = self.cursor.execute('SELECT COUNT(*) FROM main as count').fetchall()
 
-		countattatch = self.cursor.execute('SELECT COUNT(*) FROM attatch').fetchall()
-		topattatch = self.cursor.execute('SELECT fileExt, count(fileExt) as counted	from attatch group by fileExt order by 2 desc limit 10').fetchall()
-		topdomain = self.cursor.execute('SELECT domain, count(domain) as counted from header group by domain order by 2 desc limit 10').fetchall()
-		topxmail = self.cursor.execute('SELECT x_mailer, count(x_mailer) as counted from header group by x_mailer order by 2 desc limit 10').fetchall()
-		combined = [countall, countattatch, topattatch, topdomain, topxmail]
-		
-		return (countall, countattatch, topattatch, topdomain, topxmail)
+		countAll = (self.cursor.execute("SELECT COUNT(*) as counted FROM main").fetchone()).counted
+		countNonTasks = (self.cursor.execute("SELECT COUNT(*) as counted FROM main WHERE Comment NOT LIKE 'Tasking%'").fetchone()).counted
+		countTasks = (self.cursor.execute("SELECT COUNT(*) as counted FROM main WHERE Comment LIKE 'Tasking%'").fetchone()).counted
+		countEvents = (self.cursor.execute("SELECT COUNT(*) as counted FROM main WHERE Revmatch='1'").fetchone()).counted
+		countRev = (self.cursor.execute("SELECT COUNT(*) as counted FROM main WHERE Revmatch='2'").fetchone()).counted
+		countOut = (self.cursor.execute("SELECT COUNT(*) as counted FROM main WHERE (Revmatch='0' OR Revmatch='3')").fetchone()).counted
+		counts = [countAll, countNonTasks, countTasks, countEvents, countOut, countRev]
+		return counts
 		
 		
 

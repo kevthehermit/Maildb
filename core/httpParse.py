@@ -18,6 +18,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler
 from StringIO import StringIO
 from core.common import HTTPRequest
 from core.logging import MaildbLog
+from core.yarascan import Scan
 
 ## http://stackoverflow.com/questions/4685217/parse-raw-http-headers
 
@@ -30,8 +31,7 @@ class httpParse:
 		dateadded = datetime.now()
 		streamDir = os.path.join(MaildbRoot, "store", msg_id)
 		emlmd5 = MailHash().fileMD5(os.path.join(MaildbRoot, "store", msg_id, "http.pcap"))
-		db.cursor.execute("INSERT INTO main (date_added,eml_md5,Revmatch,Comment,type) VALUES (?,?,?,?,?)", (dateadded, emlmd5, mailMatch, comment, evType))
-		db.conn.commit()
+
 		
 		
 		for httpReq in os.listdir(streamDir):
@@ -107,7 +107,7 @@ class httpParse:
 						fileName = os.path.basename(urlpath)
 						query = urlparse.urlsplit(dbPath).query
 						if query:
-							fullName = fileName+"?"+query
+							fullName = fileName+"?"+query # ? is an Illegal Filename Char on Windows OK on linux
 						elif not fileName:
 							fullName = "index.html"
 						else:
@@ -118,19 +118,25 @@ class httpParse:
 						except IOError as e:
 							if e.errno == 36: # this is the error No for a long filename
 								shutil.copyfile(os.path.join(streamDir, httpFile), os.path.join(filePath, "Truncated"))
+								fullName = "Truncated"
 							else:
 								log = "##Error##, Failed to Copy " + fullName + str(e.errno) + " " + str(e.strerror)
 								MaildbLog().logEntry(log)
-
+						# yara here
+						scanFile = os.path.join(filePath, fullName)
+						md5Hash = MailHash().fileMD5(scanFile)
+						result = Scan().httpScan(scanFile, md5Hash)
+						if result:
+							mailMatch = '3'
 
 				else:
 					log = "##Error##, File Doesnt Exist " + httpResp
 					MaildbLog().logEntry(log)						
 		for filename in os.listdir(streamDir):
 			if not (filename == "http.pcap" or filename == "report.xml" or filename == "sites"):
-				os.remove(os.path.join(streamDir, filename))		
-				
-					
+				os.remove(os.path.join(streamDir, filename))						
+		db.cursor.execute("INSERT INTO main (date_added,eml_md5,Revmatch,Comment,type) VALUES (?,?,?,?,?)", (dateadded, emlmd5, mailMatch, comment, evType))
+		db.conn.commit()					
 
 				
 				

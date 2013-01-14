@@ -9,7 +9,26 @@
 
 <h1>${info.Comment} Scanned on Date ${info.date_added}</h1>
 		
-
+		<h3>Yara Rules</h3>
+		
+		
+		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
+			<tbody>
+				<tr>
+					<td style="text-align: center;">
+						<strong>Rule Name</strong></td>
+					<td style="text-align: center;">
+						<strong>Description</strong></td>
+				</tr>
+% for y in yara:				
+				<tr class="${loop.cycle('even', 'odd')}">
+					<td>${y.rule}</td>
+					<td>${y.description}</td>
+				</tr>
+% endfor
+			</tbody>
+		</table>
+		<p>&nbsp;</p>
 			
 		<h3>Flows</h3>
 		
