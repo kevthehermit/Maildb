@@ -27,7 +27,7 @@ class imapMail():
 		comment = "Tasking-"+inbox
 		count = len(items)
 		counter = 0
-		log = "##INFO##, IMAP Connection to: " + server
+		log = "##INFO##, IMAP Connection to: %s Retrieving %s Emails " % (server, count)
 		MaildbLog.logEntry(log)
 		for emailid in items:
 			emailFile = os.path.join(transferDir, inbox+emailid + ".txt")

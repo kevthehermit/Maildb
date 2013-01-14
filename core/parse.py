@@ -200,11 +200,13 @@ class emlParse(object):
 				from core.yarascan import Scan
 				filetoScan = os.path.join(self.reportDir, "attatchments", filename)
 				result = Scan().fileScan(filetoScan, md5Hash)
+				match = '0'
 				if result:
 					yaraMatch = '3'
 					match = '3'
 				else:
 					yaraMatch = '0'
+					
 			# database stuff here
 		
 			sqlAttatchments = (msg_id, str(filename), fileExt[1][1:], fileSize, md5Hash, sha256Hash, ssdHash, yaraMatch)
