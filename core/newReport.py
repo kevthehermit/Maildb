@@ -61,7 +61,7 @@ class Reporting():
 		
 		
 	def attatchRep(self, date):
-		genDate = datetime.now()
+		genDate = datetime.now().strftime("%Y-%m-%d")
 		repDate = date+"%"
 		attatch = db.cursor.execute("SELECT fileExt, count(fileExt) as counted from attatch LEFT OUTER JOIN main ON main.msg_id = attatch.msg_id WHERE main.date_added LIKE ? GROUP BY fileExt", (repDate,)).fetchall()
 		attExt = []
@@ -76,6 +76,17 @@ class Reporting():
 			countEv.append(nonEv.counted)
 		return (attExt, countNonEv, countEv, totalAtt)
 
-
+	def monthLine(self, date):
+		genDate = datetime.now().strftime("%Y-%m-%d")
+		repDate = date+"%"
+		task = db.cursor.execute("select strftime('%d', `date_added`) as d, count(date_added) as c from main where date_added like ? and Comment like 'Tasking%' group by d", (repDate,)).fetchall()
+		nonTask = db.cursor.execute("select strftime('%d', `date_added`) as d, count(date_added) as c from main where date_added like ? and Comment not like 'Tasking%' group by d", (repDate,)).fetchall()
+		count = {'01':'0', '02':'0','03':'0','04':'0','05':'0','06':'0','07':'0','08':'0','09':'0','10':'0','11':'0','12':'0','13':'0','14':'0','15':'0','16':'0','17':'0','18':'0','19':'0','21':'0','21':'0','22':'0','23':'0','24':'0','25':'0','26':'0','27':'0','28':'0','29':'0','30':'0','31':'0'};
+		nCount = {'01':'0', '02':'0','03':'0','04':'0','05':'0','06':'0','07':'0','08':'0','09':'0','10':'0','11':'0','12':'0','13':'0','14':'0','15':'0','16':'0','17':'0','18':'0','19':'0','21':'0','21':'0','22':'0','23':'0','24':'0','25':'0','26':'0','27':'0','28':'0','29':'0','30':'0','31':'0'};
+		for row in task:
+			count[row.d] = row.c;
+		for row in nonTask:
+			nCount[row.d] = row.c;
+		return (count, nCount)
 		
 

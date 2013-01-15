@@ -94,7 +94,6 @@ def adminPost():
 def stats():
 	context	= {}
 	stats = db.stats()
-	print stats
 	template = lookup.get_template("stats.html")
 	return template.render(stats=stats, **context)
 		
@@ -228,10 +227,11 @@ def create_report():
 	repDate = request.forms.reportDate
 
 	from core.newReport import Reporting
+	w = Reporting().monthLine(repDate)
 	x = Reporting().mainRep(repDate)
 	y = Reporting().attatchRep(repDate)
 	template = lookup.get_template("report.html")
-	return template.render(x=x, y=y)
+	return template.render(w=w, x=x, y=y)
 
 ### This will be for the file pages	
     

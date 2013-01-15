@@ -21,6 +21,12 @@
 	total = y[3]
 
 %>
+
+<%
+	dayCount = w[0]
+	daynCount = w[1]
+
+%>
 <script src="/static/jquery.min.js"></script>
 
 
@@ -167,6 +173,85 @@ $(function () {
     
 });
 		</script>
+
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'MonthTrend',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: 'Submission Trends',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Date Range Here',
+                x: -20
+            },
+            xAxis: {
+            	title: {
+                    text: 'Date'
+                },
+                categories: [
+                '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+                '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'                    
+                    ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Count'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'Tasks';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Signatures',
+                data: [
+% for k in sorted(daynCount):                
+                ${daynCount[k]},
+% endfor
+                
+                ]
+            }, {
+                name: 'Tasks',
+                data: [
+% for k in sorted(dayCount):                
+                ${dayCount[k]},
+% endfor
+                
+                ]
+            }]
+        });
+    });
+    
+});
+		</script>
+
+
 		
 </%def>
 
@@ -183,3 +268,5 @@ $(function () {
 <div id="mainReport" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
 <br>
 <div id="attReport" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
+<br>
+<div id="MonthTrend" style="min-width: 400px; height: 800px; margin-left: auto; margin-right: auto;"></div>
