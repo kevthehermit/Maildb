@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Login</%def>
+
+<%def name="head_tags()"></%def>
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+<div id="hbox">
+  <div class="box">
+      <h2>Password Reset</h2>
+      <p>Enter A New Password:</p>
+      <form action="passwd" method="post">
+          <input type="password" name="password" />
+          <br/><br/>
+          <button type="submit" > OK </button>
+          <button type="button" class="close"> Cancel </button>
+      </form>
+      <br />
+  </div> 
+  <br style="clear: left;" />
+</div>
+

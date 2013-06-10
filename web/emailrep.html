@@ -1,0 +1,181 @@
+<%inherit file="base.mako" />
+
+<%def name="title()">Email Information</%def>
+
+<%def name="head_tags()">
+
+
+</%def>
+
+
+
+% if info.Revmatch == 2:
+      <h2><span class="reviewed" align="center">
+% elif info.Revmatch == 1:
+      <h2><span class="event" align="center">
+% else:
+	<h2><span align="center">	
+% endif      
+${info.Comment} Submitted on ${info.date_added}</span></h2>
+     
+ % for r in headers:     
+
+ <div>     
+      <div>
+		<table>
+			<tbody>
+				<tr>
+					<td>Date</td>
+					<td>${r.date}</td>
+					<td>To:</td>
+					<td>${r.to_add}</td>
+				</tr>
+				<tr>
+					<td>From</td>
+					<td>${r.from_add}</td>
+					<td>Cc:</td>
+					<td>${r.cc_add}</td>
+				</tr>
+				<tr>
+					<td>Subject</td>
+					<td>${r.subject}</td>
+					<td>Bcc:</td>
+					<td>${r.bcc_add}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>&nbsp;</p>		
+		<table>
+			<tbody>
+				<tr>
+					<td>X-Mailer</td>
+					<td>${r.x_mailer}</td>
+					<td>Message-Id:</td>
+					<td>${r.message_id}</td>
+				</tr>
+				<tr>
+					<td>X-Priority:</td>
+					<td>${r.x_priority}</td>
+					<td>Count Recipients:</td>
+					<td>Count rcpts her</td>
+				</tr>
+			</tbody>
+		</table>
+      </div>
+
+            <div class="divider_silver" style="width:80%;"></div>
+
+
+ <div> 
+      <div>
+      <table>
+        <tr>
+        <td>Hops</td>
+        </tr>
+% for h in hops:        
+        <tr>
+          <td>Received: ${h.hop}</td>
+        </tr>
+% endfor
+      </table>
+     </div>
+      </div>
+      <div class="divider_silver" style="width:80%;"></div>
+      
+      
+
+%if htmlBody:
+<div>
+%for line in htmlBody:
+<p>${line}</p>
+%endfor
+
+</div>
+%endif
+
+%if textBody:
+<div>
+%for line in textBody:
+<p>${line}</p>
+%endfor
+
+
+</div>
+%endif
+
+
+<div>     
+<div>   
+		<table>
+				<tr>
+					<td>Type</td>
+					<td>Link</td>
+				</tr>
+% for r in links:
+				<tr>
+					<td>${r.link_type}</td>
+					<td>${r.address}</td>
+				</tr>
+% endfor
+		</table> 
+      </div>
+</div>      
+      <div class="divider_silver" style="width:80%;"></div>
+  
+
+
+ <div>    
+ <div>     
+		<table>
+				<tr>
+					<td>FileName</td>
+					<td>filesize>
+					<td>MD5</td>
+				</tr>
+% for r in attatch:
+				<tr>
+					<td><a href="/file?ID=${msg_id}&md5=${r.md5}">${r.filename}</a></td>
+					<td>${r.filesize}</td>
+					<td>${r.md5}</td>
+				</tr>
+% endfor
+
+		</table>
+
+      </div>
+      		
+     </div>
+            <div class="divider_silver" style="width:80%;"></div>
+
+
+ <div>
+      
+<div> 
+		<table>
+				<tr>
+					<td>Name</td>
+					<td>Description</td>
+				</tr>
+% for y in yara:
+				<tr>
+					<td>${y.rule}</td>
+					<td>${y.description}</td>
+				</tr>
+% endfor
+		</table>
+      </div>
+</div>
+      <div class="divider_silver" style="width:80%;"></div>
+      
+
+      <div class="divider_silver" style="width:80%;"></div>
+		<h4>Comments</h4>
+% for comment in comments:
+            <div>
+      <p>Title: ${comment.title}</p>
+      <p>${comment.freetext}</p>
+     </div>
+% endfor
+
+
+

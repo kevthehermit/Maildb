@@ -7,6 +7,7 @@ See the 'LICENSE' File for copying permission.
 # This will contain all the Admin Functions
 
 import os,stat
+import logging
 import sys
 import zipfile
 from cStringIO import StringIO
@@ -15,7 +16,6 @@ from time import gmtime, strftime
 from config.config import MaildbRoot, reportRoot, DBFile
 from db.db import Maildatabase
 from core.common import Dictionary	
-from core.logging import MaildbLog as MaildbLog
 Month = strftime ("%B", gmtime())
 Date = strftime ("%d", gmtime())
 dir = reportRoot
@@ -42,6 +42,7 @@ class adFunction:
     def archive(self):
 		db.conn.close()
 		shutil.copyfile(DBFile, os.path.join(backupDir, "Backup.db"))
+		shutil.copyfile(os.path.join(MaildbRoot, "maildb.log"), os.path.join(backupDir, "maildb.log"))
 		zip = zipfile.ZipFile(zip_file, 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(dir))
 		for root, dirs, files in os.walk(dir):
@@ -51,8 +52,7 @@ class adFunction:
 				archive_name = os.path.join(archive_root, f)
 				zip.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
 		zip.close()
-		log = "##INFO##, Full Backup Created"
-		MaildbLog().logEntry(log)
+		logging.info('Backup Created at %s', backupDir)
 		return zip_file	
 
     def reset(self):
@@ -65,6 +65,7 @@ class adFunction:
 			os.mkdir(os.path.join(MaildbRoot, "tmp"))
 		from db.db import Maildatabase
 		Maildatabase().generate()
+		logging.info('Maildb Application Reset')
         
     def restore(self, dir):
         # submit a zip file and a db file then extarct and copy in to place
@@ -81,18 +82,18 @@ class adFunction:
 		## Setup The Tables ###
 		
 		from db.db import Maildatabase
-		Maildatabase().generate()				       
+		Maildatabase().generate()
+		logging.info('DB Tables Created')				       
 
 
 class recordTools:
 		
-	def exportDir(self, msg_id, fileID):
-		print "runnign Export"
-		if fileID:
-			msgDir = os.path.join(MaildbRoot, "store", msg_id, "sites", fileID)
+	def exportDir(self, msg_id, webID, fileID):
+		if webID:
+			msgDir = os.path.join(MaildbRoot, "store", msg_id, "sites", webID)
 		else:
 			msgDir = os.path.join(MaildbRoot, "store", msg_id)
-		exp_file = os.path.join(MaildbRoot, "web", "static", "Export.zip")
+		exp_file = os.path.join(MaildbRoot, "web", "static", "downloads", "Export.zip")
 		zip = zipfile.ZipFile(exp_file, 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(msgDir))
 		for root, dirs, files in os.walk(msgDir):
@@ -102,13 +103,12 @@ class recordTools:
 				archive_name = os.path.join(archive_root, f)
 				zip.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
 		zip.close()
-		log = "##INFO##, File Export Created for " + msg_id
-		MaildbLog().logEntry(log)
 		return exp_file
 
 
 	def removeRecord(self, msg_id):
 		# put a check here to see if record exists
+		msg_id = str(msg_id)
 		db.delRecord(msg_id)
 		pathRemove = os.path.join(reportRoot, msg_id)
 		if os.path.exists(pathRemove):

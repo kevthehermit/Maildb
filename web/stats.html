@@ -9,25 +9,49 @@
 
 %>
 
-
-		<h1>Statistics And Reports</h1>
-		<p></p>
-		<h3>Task Reports</h3>
-		<p>To generate daily, montly, yearly reports please enter the date required in the box below.</p>
-		<p>Use the format YYYY-MM-DD, YYYY-MM, YYYY</p>
-		<form action="/report" enctype="multipart/form-data" method="post" name="mainReport" target="_self">
-			<input maxlength="10" name="reportDate" type="text" value="YYYY-MM-DD" /><input name="submit" type="submit" value="Create" />&nbsp;</form>
-		<h3>Statistics</h3>
-		<p>Total Number of Records: ${stats[0]}</p>
-		<p>Total number of Signatures: ${stats[1]}</p>
-		<p>Total number of Taskings: ${stats[2]}</p>
-		<p>Reviewed: ${stats[5]}</p>
-		<p>Events: ${stats[3]}</p>
-		<p>Outstanding: ${stats[4]}</p>
 		
 
 
 
+		<h1>
+			Stats and Reports</h1>
+		<p>
+			Stats</p>
+		<table border="0" cellpadding="1" cellspacing="1" style="width: 500px;">
+			<tbody>
+				<tr>
+					<td>Total Number of Submissions</td>
+					<td>${stats[0]}</td>
+				</tr>
+				<tr>
+					<td>Total Number of Signatures</td>
+					<td>${stats[1]}</td>
+				</tr>
+				<tr>
+					<td>Total Number of Taskings</td>
+					<td>${stats[2]}</td>
+				</tr>
+				<tr>
+					<td>Reviewed</td>
+					<td>${stats[5]}</td>
+				</tr>
+				<tr>
+					<td>Events</td>
+					<td>${stats[3]}</td>
+				</tr>
+				<tr>
+					<td>Outstanding</td>
+					<td>${stats[4]}</td>
+				</tr>
+			</tbody>
+		</table>
+		<form action="/report" enctype="multipart/form-data" method="post" name="mainReport" target="_self">
+			<p>Start Date:&nbsp;<input maxlength="10" name="startDate" type="text" value="YYYY-MM-DD" /></p>
+			<p>End Date:&nbsp;<input maxlength="10" name="endDate" type="text" value="YYYY-MM-DD" /></p>
+			<p><input name="submit" type="submit" value="Generate" /></p>
+		</form>
+		
+		
 
 
 

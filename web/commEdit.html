@@ -1,0 +1,9 @@
+<script src="/static/js/validate.js"></script>
+<p>You Are Editing A Comment</p>
+<form action="/edit" enctype="multipart/form-data" method="post" name="Comments" target="_self" onsubmit="return validateComment();">
+<p>Title: <input name="title" type="text" value="" /></p>
+<p><textarea cols="50" name="freetext" rows="4"></textarea></p>
+
+<input type="hidden" name="commID" type="text" value="${commID}" />
+<p><input name="Submit" type="submit" value="submit" /></p>
+</form>

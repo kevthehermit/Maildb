@@ -20,7 +20,7 @@ popupWindow = window.open(url,winName,settings)
 </script>
 
 % for f in fileInfo:
-<h1>File Information for ${f.filename} Here</h1>
+<h1>${f.filename}</h1>
 
 <div id="Static">
 <p class="Title">Static Analysis</p>
@@ -43,36 +43,54 @@ popupWindow = window.open(url,winName,settings)
 <p class="descriptor">SSDeep: </span>
 <span class="info">${f.ssdeep}</span></p>
 
-</div>
+% endfor
+<p class="Title">Yara Results</p>
+<div class="main_Table" >
 
-<table id="sig">
-<caption> Yara Rules</caption>
-<thead><tr><th>Rule Name</th><th>Description</th><thead>
-
-<tbody>
+		<table>
+				<tr>
+					<td>Name</td>
+					<td>Description</td>
+				</tr>
 % for y in yara:
-	<tr class="${loop.cycle('even', 'odd')}">
-		<td>${y.rule}</td>
-		<td>${y.description}</td>		
-	</tr>
-</tbody>
+				<tr>
+					<td>${y.rule}</td>
+					<td>${y.description}</td>
+				</tr>
 % endfor
-
-
+		</table>
+      </div>
 </div>
-% endfor
+
+
+
 
 <div id="Dynamic">
 <p class="Title">Dynamic Analysis</p>
+			<div id='filemenu'>
+				<ul>
+					<li class='has-sub last'><a href='#'><span>FireEye - MAS</span></a>
+						<ul>
+							<li><a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-base&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false"><span>WinXP Base</span></a></li>
+							<li><a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-sp2&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false"><span>WinXP SP2</span></a></li>
+							<li><a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-sp3&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false"><span>WinXP SP3</span></a></li>
+							<li><a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=win7-base&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false"><span>Win7 Base</span></a></li>
+							<li><a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=win7-sp1&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false"><span>Win7 SP1</span></a></li>
+						</ul>
+					<li class='has-sub last'><a href='#'><span>Cuckoo</span></a>
+						<ul>
+							<li><a href='/help'><span>Submit</span></a></li>
+							<li><a href='/decode'><span>Report</span></a></li>
+						</ul>
+					<li class='has-sub last'><a href='#'><span>Virus Total</span></a>
+						<ul>
+							<li><a href='/help'><span>Submit</span></a></li>
+							<li><a href='/decode'><span>View</span></a></li>
+						</ul>
+				</ul>
+			</div>
 
-
-
-<a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-base&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">MAS XP-Base</a>
-<a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-sp2&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">MAS XP-SP2</a>
-<a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=winxp-sp3&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">MAS XP-SP3</a>
-<a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=win7-base&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">MAS Win7-Base</a>
-<a href="/analyse?ID=${f.msg_id}&sandbox=MAS&profile=win7-sp1&filename=${f.filename}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">MAS Win7-SP1</a>
 </div>
-
+</div>
 
 

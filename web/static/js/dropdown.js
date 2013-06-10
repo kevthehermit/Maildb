@@ -111,5 +111,39 @@ Option('Hop','hop');
 
 }
 
+if (chosen == "links") {
+
+  selbox.options[selbox.options.length] = new
+Option('Link Type','link_type');
+  selbox.options[selbox.options.length] = new
+Option('URL','address');
+
+
+}
+
+if (chosen == "WebLog") {
+
+  selbox.options[selbox.options.length] = new
+Option('Crendential','userCredential');
+  selbox.options[selbox.options.length] = new
+Option('URL','csURI');
+
+
+}
+
+if (chosen == "EmailLog") {
+
+  selbox.options[selbox.options.length] = new
+Option('Sender','sender');
+  selbox.options[selbox.options.length] = new
+Option('Recipient','recipient');
+  selbox.options[selbox.options.length] = new
+Option('Message ID','msgid');
+  selbox.options[selbox.options.length] = new
+Option('Subject','subject');
+
+
+}
+
 }
 

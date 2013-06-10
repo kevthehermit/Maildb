@@ -9,12 +9,12 @@ import os
 
 ##### Version #####
 
-version = '0.1.4'
+version = '0.4.4'
 development = True
 
 ##### Settings ######
 
-webPort = '7070'
+webPort = '7171'
 logEnable='1' # Log Errors
 
 ##### Locations ######
@@ -22,7 +22,7 @@ MaildbRoot = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__fil
 transferDir = os.path.join(MaildbRoot, "tmp")		# Location of temporary Pcap files
 reportRoot = os.path.join(MaildbRoot, "store")		# Save Location for reports
 DBFile = os.path.join(MaildbRoot, "db", "database.db")	# Database File
-ProxyPort = '8080'
+ProxyPort = '80'
 SSLPort = '443'
 ##### Enable SSDEEP #######
 
@@ -36,9 +36,7 @@ dblocation = os.path.join(MaildbRoot, "clam", "clam.db")
 ##### Yara #####
 
 enableYara = '1'
-emailSig = os.path.join(MaildbRoot, "yara", "email.yar")
-fileSig = os.path.join(MaildbRoot, "yara", "index.yar")
-falsepos = '0'
+yaraRuleFile = os.path.join(MaildbRoot, "yara", "ye_all.yar")
 
 ##### Virus Total#####
 # Not Implemented Yet
@@ -46,10 +44,17 @@ falsepos = '0'
 vtsubmit='0'
 vtapikey=''
 
-##### Sandbox #######
 
-enableCuckoo = "0"
-enableMAS = "1"
-MASRoot = "/mnt/DATA/MAS"
+## Cuckoo
+enableCuckoo = '1'
+cuckooUrl = "localhost"
+cuckooPort = "8090"
+cuckooMachine = "SandBox_Win7"
+
+
+
+
+
+
 
 

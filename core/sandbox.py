@@ -6,14 +6,10 @@ See the 'LICENSE' File for copying permission.
 '''
 
 import os
-from core.logging import MaildbLog
 from config.config import MaildbRoot, enableMAS, enableCuckoo
-
 import shutil
 import subprocess
-
-# stackoverflow.com/questions/3090724/
-
+import logging
 
 class sandboxSubmit():
 	def submitMAS(self, profile, filename, msg_id):
@@ -22,8 +18,36 @@ class sandboxSubmit():
 			fileName = os.path.join(MaildbRoot, "store", msg_id,"attatchments", filename)
 			profilePath = os.path.join(MASRoot, profile, "src", filename)
 			shutil.copyfile(fileName, profilePath)
-			log = "##INFO##, File: " + filename + " Submitted To MAS"
-			MaildbLog().logEntry(log)
+			logging.info('File %s Submitted to MAS', fileName)
 	def submitCuckoo(self, user, pwd, server):
 		pass
 
+class cuckooAPI():
+
+
+	def submitFile(self, fileName):
+		if enableCuckoo == '1':
+			import requests
+			from config.config import cuckooUrl, cuckooPort, cuckooMachine
+			url = "http://"+cuckooUrl+":"+cuckooPort+"/tasks/create/file"
+			options = {'file': fileName, 'machine':cuckooMachine} 
+			capi = requests.post(url, data=options)
+			return True
+		
+	def submitURL(self, malUrl):
+		if enableCuckoo == '1':
+			import requests
+			from config.config import cuckooUrl, cuckooPort, cuckooMachine
+		url = "http://"+cuckooUrl+":"+cuckooPort+"/tasks/create/url"
+		options = {'url': malUrl, 'machine': cuckooMachine}
+		capi = requests.post(url, data=options)
+		return capi.text
+		
+	def queryFiles():
+		pass
+	
+	def viewReport():
+		pass
+		
+		
+	

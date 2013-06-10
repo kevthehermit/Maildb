@@ -16,43 +16,51 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<!doctype html>
 <html>
 <head>
 
 
-
-<title>Mail DataBase ${self.title()}</title>
+<script src="/static/js/jquery.min.js" type="text/javascript"></script>
+<script src="/static/js/popup.js" type="text/javascript"></script>
+<title>DataBase ${self.title()}</title>
 ${self.head_tags()}
-<link rel="stylesheet" type="text/css" href="/static/mae.css" />
-
+<link rel="stylesheet" type="text/css" href="/static/css/mae.css">
+<link rel="stylesheet" type="text/css" href="/static/css/menu.css">
 </head>
 <body>
-<script language="javascript">
-var popupWindow = null;
-function centeredPopup(url,winName,w,h,scroll){
-LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-settings =
-'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
-popupWindow = window.open(url,winName,settings)
-}
-</script>
-<ul id="nav">
-    <img src="/static/Maildb.png" align="left"/>
-    <li id="nav-1"><a href="/">Home</a></li>
-    <li id="nav-2"><a href="/browse">Browse</a></li>
-    <li id="nav-3"><a href="/stats">Stats</a></li>
-    <li id="nav-4"><a href="/search">Search</a></li>
-    <li id="nav-5"><a href="/help">Help</a></li>
-    <li id="nav-6"><a href="/decode">Decode Tools</a></li>
-    <li id="nav-7"><a href="/admin">Admin</a></li>
-</ul>
-<br>
-<br>
-    
 
+<div class=container>
+<div id='cssmenu'>
+<ul>
+	
+   <li><a href='/'><span>Home</span></a></li>
+   <li><a href='/browse'><span>Browse</span></a></li>
+   <li><a href='/stats'><span>Stats</span></a></li>
+      <li class='has-sub last'><a href='#'><span>Search</span></a>
+      <ul>
+         <li><a href='/search'><span>Record Search</span></a></li>
+         <li class='last'><a href='/logSearch'><span>Log Search</span></a></li>
+      </ul>
+   </li>
+   <li class='has-sub last'><a href='#'><span>Tools</span></a>
+      <ul>
+         <li><a href='/help'><span>Help</span></a></li>
+         <li><a href='/decode'><span>Decode Tools</span></a></li>
+         <li><a href='/useradmin'><span>User Accounts</span></a></li>
+         <li class='last'><a href='/admin'><span>Admin Tools</span></a></li>
+      </ul>
+   </li>
+   <li><a href='/login'><span>Login</span></a></li>
+   <li><a href='/logout'><span>Logout</span></a></li>
+</ul>
+</div>
+</div>
+
+    
+<div class="container">
 ${self.body()}
-<br />
-<p align="center">Copyright Kevin Breen 2012-2013 Version xxxx</p>
+</div>
+<p align="center">Copyright Kevin Breen 2012-2013 Version 0.3.3</p>
 </body>
 </html>

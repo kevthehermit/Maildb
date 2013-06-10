@@ -8,13 +8,16 @@
 
 	<body>
 		<h1>Admin Interface</h1>
-		<p><span style="color:#ff0000;">There are no Auth Or Confirmation Checks - Be carful what you click</span></p>
-		<p><a href="/admin?function=install" class="button">Install</a>&nbsp;- Sets up the folder structure and Required DB Tables if not already Set</p>
-		<p><a href="/admin?function=backup" class="button">Backup</a>&nbsp;- Erases all Stored Files and resets the Database to Default Values</p>
-		<p><a href="/admin?function=reset" class="button">Reset</a>- Archives the Database and associated Files</p>
-		
-		<form action="/admin" method="POST" name="msg_id" target="_blank">
-			<input name="msg_id" type="text" value="Task ID" /><input name="submit" type="submit" value="Delete Record"/>- Delete the record and any associated Files</form>
+		<p><span style="color:#ff0000;">All Actions on this Page are logged with your UserName</span></p>
+		<p><a href="/admin?function=install" onclick="return confirm('Are You Sure?');" class="button">Install</a>&nbsp;- Sets up the folder structure and Required DB Tables if not already Set</p>
+		<p><a href="/admin?function=backup" onclick="return confirm('Are You Sure?');" class="button">Backup</a>&nbsp;- Archives the Database and associated Files</p>
+		<p><a href="/admin?function=reset" onclick="return confirm('Are You Sure?');" class="button">Reset</a>- Erases all Stored Files and resets the Database to Default Values</p>
+		<p><a href="/logParse?type=validate" onclick="return confirm('Are You Sure?');" class="button">Validate Logs</a>- Validate the MD5 Sum of the Log Files</p>
+		<p><a href="/logParse?type=email" onclick="return confirm('Are You Sure?');" class="button">Email Logs</a>- Parse Email Logs in to the Database</p>
+		<p><a href="/logParse?type=web" onclick="return confirm('Are You Sure?');" class="button">Web Logs</a>- Parse Web Logs in to the Database</p>		
+		<p>Delete Records To delete a single entry leave the End Blank
+		<form action="/admin" method="get" name="delete" target="_blank">
+			Start: <input name="start" type="text" value="" />End: <input name="end" type="text" value="" /><input name="function" type="submit" value="Delete" class="button" onclick="return confirm('Are You Sure?');"/>- Delete the record and any associated Files</form>
 		<p><strong>Log</strong></p>
 		<p><textarea cols="60" name="Log" rows="25" style="margin-left: 2px; margin-right: 2px; width: 765px;">
 % for line in logFile:

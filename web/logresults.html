@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">All Samples</%def>
+
+<%def name="head_tags()">
+
+
+</%def>
+
+% if logType == "WebLog":
+
+<h1>Search Results for ${search} Between ${sTime} and ${eTime}</h1>
+
+
+<table border="1" style="table-layout: fixed;">
+<tr><td>Time</td><td>IP</td><td>URL</td><td>Method</td><td>Status</td><td>User</td>
+
+
+% for result in rows:
+
+	<tr>		
+		<td>${result[0]}</td>
+		<td>${result[1]}</td>
+		<td><div style="width:600px;word-break: break-all;">${result[4][0:80]}...</div></td>
+		<td>${result[3]}</td>
+		<td>${result[2]}</td>
+		<td>${result[5]}</td>
+	</tr>
+
+% endfor
+</table>
+%endif
+
+% if logType == "EmailLog":
+
+<h1>${len(rows)} Search Results for ${search} Between ${sTime} and ${eTime}</h1>
+
+<div class="log_Table" >
+<table border="1" style="table-layout: fixed;">
+<tr><td>Time</td><td>Sender</td><td>Recipient</td><td>Subject</td><td>Message ID</td><td>Last Hop</td><td>Action</td><td>Reason</td>
+
+
+% for result in rows:
+
+	<tr>		
+		<td>${result[2]}</td>
+		<td><a href="logResults?search=${result[0]}&start=2013-01-01&end=2013-12-31&optone=EmailLog&opttwo=sender">${result[0]}</a></td>
+		<td><a href="logResults?search=${result[1]}&start=2013-01-01&end=2013-12-31&optone=EmailLog&opttwo=recipient">${result[1]}</a></td>
+		<td><a href="logResults?search=${result[5]}&start=2013-01-01&end=2013-12-31&optone=EmailLog&opttwo=subject">${result[5]}</a></td>
+		<td>${result[4][1:-1]}</td>
+		<td>${result[3]}</td>
+		<td>${result[7]}</td>
+		<td>${result[8]}</td>
+	</tr>
+
+% endfor
+</table>
+%endif
+</div>

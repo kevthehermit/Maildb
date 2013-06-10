@@ -7,9 +7,7 @@ See the 'LICENSE' File for copying permission.
 
 import email, imaplib, os
 import time 
-from core.logging import MaildbLog
 from config.config import reportRoot, transferDir, deleml, MaildbRoot
-MaildbLog = MaildbLog()
 from db.db import Maildatabase
 import shutil
 

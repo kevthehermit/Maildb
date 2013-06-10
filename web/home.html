@@ -5,39 +5,26 @@
 
 <%def name="head_tags()"></%def>
 
-<h1>Welcome to the MAE interactive Signature Database</h1>
 
-<p>Use the forms below to submit your task.</p>
-<p>Use the Help Pages if you get stuck.</p>
-
-
-<p>Pcap or Email Stream</p>
-
-
-<form action="/submit" method="post" enctype="multipart/form-data">
-<input type="file" name="data" />
-Comment:<input type="text" name="comment" />
-<input type="submit" value="Submit" />
-</form>
-
-
-<p>IMAP Feed</p>
-
-<form action="/imap" method="post" enctype="multipart/form-data">
-Username:<input type="text" name="user" />
-Password:<input type="password" name="password" />
-Server:<input type="text" name="server" />
-Inbox:<input type="text" name="inbox" />
-<input type="submit" value="Submit" />
+<script src="/static/js/validate.js"></script>
+		<h1>Mail Database</h1>
+		<p>Use one of the following methods to submit your Task.</p>
+		<form action="/submit" method="post" enctype="multipart/form-data" name="submission" onsubmit="return validateForm();">
+			<p>File Submissions</p>
+			<p><input name ="data" type="file" /></p>
+			<p><input name="comment" type="text" /></p>
+			<p>| <input name="type" type="radio" value="email" />Email |<input name="type" type="radio" value="http" /> HTTP |<input name="type" type="radio" value="task" /> Task |</p>
+			<p><input name="submit" type="submit" value="Submit" class="button" onclick="return confirm('Did you check that the Pcap is correctly Filtered?');"/></p>
+		</form>
+		<p></p>
+		<form action="/imap" enctype="application/x-www-form-urlencoded" method="post" name="feed" target="_blank">
+			<p>Email Feeds</p>
+			<p><input name="user" type="text" value="Username" /><input name="password" type="password" /></p>
+			<p><input name="server" type="text" value="Server Address" /><input name="inbox" type="text" value="Inbox" /></p>
+			<p><select name="protocol" size="1"><option value="imap">IMAP</option><option value="pop">POP</option></select><input name="submit" type="button" value="Submit" class="button"/></p>
+		</form>
 
 
-Protocol:<select name="protocol" size="1"">
-
-
-<option value="pop">POP3</option>
-<option value="imap" selected="selected">IMAP</option>
-
-</form>
 
 
 

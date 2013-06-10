@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">Search Page</%def>
+
+<%def name="head_tags()"></%def>
+<script src="/static/js/dropdown.js"></script>
+<h1>Search Page</h1>
+
+
+
+<form name="myform" action="/logResults" method="GET" enctype="multipart/form-data">
+Search Term:<input type="text" name="search" />
+Start Date:<input type="text" name="start" value="2013-01-01" />
+End Date:<input type="text" name="end" value="2013-12-31" />
+Table:<select name="optone" size="1"
+onchange="setOptions(document.myform.optone.options
+[document.myform.optone.selectedIndex].value);">
+
+<option value=" " selected="selected"> </option>
+<option value="WebLog">WebLogs</option>
+<option value="EmailLog">Email Logs</option>
+
+
+</select><br> <br>
+Column:<select name="opttwo" size="1">
+<option value=" " selected="selected">Please select one of the options above first</option>
+</select>
+<input type="submit" value="Submit" />
+</form>
+
+
+<h4>Comparative Search</h4>
+<p>This takes an email address and Looks for every recipient</p>
+<p>For each recipient in this list it creates a list of every mail they have received</p>
+<p>It then runs a comparison of Each list looking for identical Subject Lines </p>
+<p>This type of search will highlight any additional Phishing attempts made to this group of people</p>
+
+
+<form name="compare" action="/comparison" method="GET" enctype="multipart/form-data">
+Search Term:<input type="text" name="email" />
+<input type="hidden" name="column" value="sender" />
+<input type="submit" value="Submit" />
+</div></form>
+
+
+
+
+
+
+
+
+
+

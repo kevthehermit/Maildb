@@ -4,186 +4,261 @@
 
 <%def name="head_tags()">
 
-<style>
-.togglebox {
-background-color: #CCC;
-height: 100px;
-max-height: 100px;
--webkit-transition: max-height 1s ease-in-out;
--moz-transition: max-height 1s ease-in-out;
--ms-transition: max-height 1s ease-in-out;
--o-transition: max-height 1s ease-in-out;
-}
-</style>
-<script src="/static/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-//Hide on load
-$(".togglebox").hide();
-//slide on click
-$("#one").click(function(){
-//slide toggle effect
-$(".togglebox").slideToggle(600);
-return true;
-});
+
+</%def>
+ <script type="text/javascript">
+function toggleSlides(){
+	$('.toggler').click(function(e){
+		var id=$(this).attr('id');
+		var widgetId=id.substring(id.indexOf('-')+1,id.length);
+		$('#'+widgetId).slideToggle();
+		$(this).toggleClass('sliderExpanded');
+		$('.closeSlider').click(function(){
+				$(this).parent().hide('slow');
+				var relatedToggler='toggler-'+$(this).parent().attr('id');
+				$('#'+relatedToggler).removeClass('sliderExpanded');
+		});
+	});
+};
+$(function(){
+	toggleSlides();
 });
 </script>
 
-</%def>
 
-<h1>${info.Comment} Scanned on Date ${info.date_added}</h1>
-% for r in headers:				
-		<h3>Header Information</h3>
-		
-		
-		<table border="1" cellpadding="1" cellspacing="1"">
+<script>
+$(document).ready(function(){
+
+	$('.main_Table tr').click(function(){
+		var href = $(this).find("a").attr("href");
+		if(href) {
+			window.location = href;
+		}
+	});
+});
+</script>
+<script src="/static/js/popup.js"></script>
+
+% if info.Revmatch == 2:
+      <h2><span class="reviewed" align="center">
+% elif info.Revmatch == 1:
+      <h2><span class="event" align="center">
+% else:
+	<h2><span class="title" align="center">	
+% endif      
+${info.Comment} Submitted on ${info.date_added}</span></h2>
+     
+ % for r in headers:     
+<h4 style="cursor:pointer;" class="toggler" id="toggler-slideOne">
+	<span class="collapseSlider">+ Show Email Headers</span><span class="expandSlider">- Hide Email Headers</span>
+</h4>
+
+ <div class="sliderExpanded" id="slideOne">     
+      <div class="othertable">
+		<table>
 			<tbody>
 				<tr>
-					<td>Date:</td>
-					<td>${r.date}</td>
-					<td>To:</td>
-					<td>${r.to_add}</td>
+					<td class="itemname">Date</td>
+					<td class="itemcontent">${r.date}</td>
+					<td class="itemname">To:</td>
+					<td class="itemcontent">${r.to_add}</td>
 				</tr>
 				<tr>
-					<td>From:</td>
-					<td>${r.from_add}</td>
-					<td>Cc:</td>
-					<td>${r.cc_add}</td>
+					<td class="itemname">From</td>
+					<td class="itemcontent">${r.from_add}</td>
+					<td class="itemname">Cc:</td>
+					<td class="itemcontent">${r.count_to}</td>
 				</tr>
 				<tr>
-					<td>Subject:</td>
-					<td>${r.subject}</td>
-					<td>Bcc:</td>
-					<td>${r.bcc_add}</td>
+					<td class="itemname">Subject</td>
+					<td class="itemcontent">${r.subject}</td>
+					<td class="itemname">Bcc:</td>
+					<td class="itemcontent">${r.count_cc}</td>
 				</tr>
 			</tbody>
 		</table>
-		<p>&nbsp;</p>
-		
-		
-		<table border="1" cellpadding="1" cellspacing="1"">
+		<p>&nbsp;</p>		
+		<table>
 			<tbody>
 				<tr>
-					<td>X-Mailer:</td>
-					<td>${r.x_mailer}</td>
-					<td>Message-Id:</td>
-					<td>${r.message_id}</td>
+					<td class="itemname">X-Mailer</td>
+					<td class="itemcontent">${r.x_mailer}</td>
+					<td class="itemname">Message-Id:</td>
+					<td class="itemcontent">${r.message_id}</td>
 				</tr>
 				<tr>
-					<td>X-Priority:</td>
-					<td>${r.x_priority}</td>
-					<td>Count Recipients:</td>
-					<td>Coutn rcpts here</td>
+					<td class="itemname">X-Priority:</td>
+					<td class="itemcontent">${r.x_priority}</td>
+					<td class="itemname">Attatchments:</td>
+					<td class="itemcontent">${info.attCount}</td>
 				</tr>
 			</tbody>
 		</table>
-		<hr />
-
+      </div>
+% if textBody:
+<a href="#" onclick="popup('textBody')" class="button">Show Text Body</a>
+% endif
+%if htmlBody:      
+      <a href="#" onclick="popup('htmlBody')" class="button">Show HTML Body</a>
+% endif
+ </div>     
 % endfor
+            <div class="divider_silver" style="width:80%;"></div>
+<h4 style="cursor:pointer;" class="toggler" id="toggler-slideTwo">
+	<span class="expandSlider">+ Show Email Hops</span><span class="collapseSlider">- Hide Email Hops</span>
+</h4>
 
-		
-		<h3>Body</h3>
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 1000px;">
-			<tbody>
-				<tr>
-					<td class="togglebox">
-					% for line in f:
-					<p>${line}</p>
-					% endfor
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<p><button id="one">Show Body</button></p>
-			
-			
-		<h3>Hops</h3>
-% for h in hops:		
-		<p>Received: ${h.hop}</p>
+ <div class="slider" id="slideTwo"> 
+      <div class="main_Table">
+      <table>
+        <tr>
+        <td>Hops</td>
+        </tr>
+% for h in hops:        
+        <tr>
+          <td>Received: ${h.hop}</td>
+        </tr>
 % endfor
+      </table>
+     </div>
+      </div>
+      <div class="divider_silver" style="width:80%;"></div>
+      
+      
+ <h4 style="cursor:pointer;" class="toggler" id="toggler-slideThree">
+	<span class="expandSlider">+ Show Links, IMG Src and Iframes</span><span class="collapseSlider">- Hide Links, IMG Src and Iframes</span>
+</h4>
 
-		<h3>Links, Images And Iframes</h3>
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+ <div class="slider" id="slideThree">     
+<div class="main_Table" >   
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>Type</strong></td>
-					<td style="text-align: center;">
-						<strong>Link</strong></td>
+					<td>Type</td>
+					<td>Link</td>
+					<td>Sandbox</td>
 				</tr>
-% for r in links:				
-				<tr class="${loop.cycle('even', 'odd')}">
-					<td>${r.link_type}</a></td>
+% for r in links:
+				<tr>
+					<td>${r.link_type}</td>
 					<td>${r.address}</td>
+					<td><a href="/analyse?ID=${r.msg_id}&sandbox=Cuckoo&type=url&url=${r.address}" onclick="centeredPopup(this.href,'myWindow','200','100','yes');return false" class="button">Cuckoo</a></td>
 				</tr>
 % endfor
-			</tbody>
-		</table>		
-		
-		<h3>Attatchments</h3>
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+		</table> 
+      </div>
+</div>      
+      <div class="divider_silver" style="width:80%;"></div>
+  
+   <h4 style="cursor:pointer;" class="toggler" id="toggler-slideFour">
+	<span class="expandSlider">+ Show Attatchments</span><span class="collapseSlider">- Hide Attatchments</span>
+</h4>
+
+ <div class="slider" id="slideFour">    
+ <div class="main_Table" >     
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>FileName</strong></td>
-					<td style="text-align: center;">
-						<strong>MD5</strong></td>
+					<td>FileName</td>
+					<td>MD5</td>
 				</tr>
-% for r in attatch:				
-				<tr class="${loop.cycle('even', 'odd')}">
+% for r in attatch:
+				<tr>
 					<td><a href="/file?ID=${msg_id}&md5=${r.md5}">${r.filename}</a></td>
 					<td>${r.md5}</td>
 				</tr>
 % endfor
-			</tbody>
-		</table>
-		
 
-		<p>&nbsp;</p>
-		<p><button onClick="window.open('/export?msg_id=${msg_id}')">Package For VM</button></p>
-		<p>&nbsp;</p>	
-			
-		<h3>Yara Rules</h3>
-		
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+		</table>
+
+      </div>
+      		<p><button onClick="window.open('/export?type=all&msg_id=${msg_id}')">Package For VM</button></p>
+     </div>
+            <div class="divider_silver" style="width:80%;"></div>
+ <h4 style="cursor:pointer;" class="toggler" id="toggler-slideFive">
+	<span class="expandSlider">+ Show Yara Rules</span><span class="collapseSlider">- Hide Yara Rules</span>
+</h4>
+
+ <div class="slider" id="slideFive">
+      
+<div class="main_Table" > 
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>Rule Name</strong></td>
-					<td style="text-align: center;">
-						<strong>Description</strong></td>
+					<td>Name</td>
+					<td>Description</td>
 				</tr>
-% for y in yara:				
-				<tr class="${loop.cycle('even', 'odd')}">
+% for y in yara:
+				<tr>
 					<td>${y.rule}</td>
 					<td>${y.description}</td>
 				</tr>
 % endfor
-			</tbody>
 		</table>
-		<p>&nbsp;</p>
-		
-		
-		<h3>Comments</h3>
-% for comment in comments:		
-		
-		<p>Title:  ${comment.title}</p>
-		<p>Comment: ${comment.freetext}</p>
+      </div>
+</div>
+      <div class="divider_silver" style="width:80%;"></div>
+      
+ <h4 style="cursor:pointer;" class="toggler" id="toggler-slideSix">
+	<span class="expandSlider">+ Show Case Files</span><span class="collapseSlider">- Hide Case Files</span>
+</h4>
 
-% endfor			
+ <div class="slider" id="slideSix">
+ <p>The following files have been added</p>      
+<div class="case_files">
+
+% if caseFiles != None:
+% for file in caseFiles:
+<p><a href="/export?type=file&msg_id=${msg_id}&fileID=${file}">${file} Download</a></p>
+% endfor
+% endif
+<p>To add more files use the file submission form here</p>
+		<form action="/upload" target="frame_success" method="post" enctype="multipart/form-data" name="upload">
+			<p><input name ="data" type="file" /></p>
+			<p><input type="hidden" name="msg_id" type="text" value="${msg_id}" /></p>
+			<p><input name="submit" type="submit" value="Submit" /></p>
+		</form>
+</div>
+</div>
+
+<iframe name="frame_success" width="0" height="0" style="display:none;"></iframe>
+      <div class="divider_silver" style="width:80%;"></div>
+		<h4>Comments</h4>
+% for comment in comments:
+            <div class="comments">
+      <p>Title: ${comment.title}</p>
+      <p>${comment.freetext}</p>
+      <span class="edit"><a href="/edit?section=comment&commID=${comment.rowid}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false">Edit</a></span></p>
+     </div>
+% endfor
+       <p> <a href="/review?ID=${msg_id}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" class="button">New Comment</a></p>	
+			
 <%
 next = int(msg_id) + 1
 prev = int(msg_id) - 1
 %>
 
 			<p style="text-align: center;">
-				<a href="/sig/${prev}"> Prev</a> | <a href="/review?ID=${msg_id}&flag=review" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Review</a>| <a href="/review?ID=${msg_id}&flag=event" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Event</a>| <a href="/review?ID=${msg_id}&flag=clear" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Clear</a>| <a href="/sig/${next}">Next</a></p>
+				<a href="/sig/${prev}"> Prev</a> | <a href="/review?ID=${msg_id}&flag=review" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Review</a> | <a href="/review?ID=${msg_id}&flag=event" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Event</a> | <a href="/review?ID=${msg_id}&flag=clear" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Clear</a> | <a href="/sig/${next}"> Next</a></p>
 
-		
-		
-		
+
+%if htmlBody:
+<div id="blanket" style="display:none;"></div>
+<div id="htmlBody" style="display:none;">
+<a href="#" onclick="popup('htmlBody')"class="button">Click To Close</a>
+%for line in htmlBody:
+<p>${line}</p>
+%endfor
+<a href="#" onclick="popup('htmlBody')"class="button">Click To Close</a>
+</div>
+%endif
+
+%if textBody:
+<div id="blanket" style="display:none;"></div>
+<div id="textBody" style="display:none;">
+
+<a href="#" onclick="popup('textBody')"class="button">Close</a>
+%for line in textBody:
+<p>${line}</p>
+%endfor
+<a href="#" onclick="popup('textBody')" class="button">Close</a>
+
+</div>
+%endif

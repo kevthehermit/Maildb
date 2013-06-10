@@ -1,9 +1,9 @@
 
 
 
-
-<p>To Modify this item please enter a Comment Below</p>
-<form action="/review" enctype="multipart/form-data" id="update" method="post" name="Updates" target="_self">
+<script src="/static/js/validate.js"></script>
+<p>Please enter a Comment Below</p>
+<form action="/review" enctype="multipart/form-data" method="post" name="Comments" target="_self" onsubmit="return validateComment();">
 <p>Title: <input name="title" type="text" value="" /></p>
 <p><textarea cols="50" name="freetext" rows="4"></textarea></p>
 <input type="hidden" name="flag" type="text" value="${flag}" />

@@ -6,68 +6,92 @@
 
 
 </%def>
+ <script type="text/javascript">
+function toggleSlides(){
+	$('.toggler').click(function(e){
+		var id=$(this).attr('id');
+		var widgetId=id.substring(id.indexOf('-')+1,id.length);
+		$('#'+widgetId).slideToggle();
+		$(this).toggleClass('sliderExpanded');
+		$('.closeSlider').click(function(){
+				$(this).parent().hide('slow');
+				var relatedToggler='toggler-'+$(this).parent().attr('id');
+				$('#'+relatedToggler).removeClass('sliderExpanded');
+		});
+	});
+};
+$(function(){
+	toggleSlides();
+});
+</script>
+% if info.Revmatch == 2:
+      <h2><span class="reviewed" align="center">
+% elif info.Revmatch == 1:
+      <h2><span class="event" align="center">
+% else:
+	<h2><span class="title" align="center">	
+% endif      
+${info.Comment} Submitted on ${info.date_added}</span></h2>
+		
+   <h4 style="cursor:pointer;" class="toggler" id="toggler-slideOne">
+	<span class="expandSlider">+ Show YaraRules</span><span class="collapseSlider">- Hide YaraRules</span>
+</h4>
 
-<h1>${info.Comment} Scanned on Date ${info.date_added}</h1>
+ <div class="slider" id="slideOne">    
+ <div class="main_Table" >
 		
-		<h3>Yara Rules</h3>
 		
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>Rule Name</strong></td>
-					<td style="text-align: center;">
-						<strong>Description</strong></td>
+					<td>Rule Name</td>
+					<td>Description</td>
 				</tr>
 % for y in yara:				
-				<tr class="${loop.cycle('even', 'odd')}">
+				<tr>
 					<td>${y.rule}</td>
 					<td>${y.description}</td>
 				</tr>
 % endfor
-			</tbody>
 		</table>
-		<p>&nbsp;</p>
-			
-		<h3>Flows</h3>
+</div>
+</div>		
+	      <div class="divider_silver" style="width:80%;"></div>	
+   <h4 style="cursor:pointer;" class="toggler" id="toggler-slideTwo">
+	<span class="expandSlider">+ Show IP's</span><span class="collapseSlider">- Hide IP's</span>
+</h4>
+
+ <div class="slider" id="slideTwo">    
+ <div class="main_Table" >
 		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>Source IP</strong></td>
-					<td style="text-align: center;">
-						<strong>Destination IP</strong></td>
+					<td>Source IP</td>
+					<td>Destination IP</td>
 				</tr>
 % for r in flows:				
-				<tr class="${loop.cycle('even', 'odd')}">
+				<tr>
 					<td>${r.SIP}</a></td>
 					
 					<td>${r.DIP}</td>
 					
 				</tr>
 % endfor
-			</tbody>
 		</table>
-		
+</div>		
+</div>
+      <div class="divider_silver" style="width:80%;"></div>
+   <h4 style="cursor:pointer;" class="toggler" id="toggler-slideThree">
+	<span class="expandSlider">+ Show Sessions</span><span class="collapseSlider">- Hide Sessions</span>
+</h4>
 
-		<p>&nbsp;</p>
-
-		<p>&nbsp;</p>	
-			
-		<h3>Sessions</h3>
+ <div class="slider" id="slideThree">    
+ <div class="main_Table" >		
 		
-		
-		<table border="1" cellpadding="1" cellspacing="1" style="width: 800px;">
-			<tbody>
+		<table>
 				<tr>
-					<td style="text-align: center;">
-						<strong>Host</strong></td>
-					<td style="text-align: center;">
-						<strong># Of Requests</strong></td>
-					<td style="text-align: center;">
-						<strong>Download</strong></td>
+					<td>Host</td>
+					<td># Of Requests</td>
+					<td>Download></td>
 			
 				</tr>
 % for s in sessions:				
@@ -75,27 +99,55 @@
 					<td><a href="/file?ID=${msg_id}&host=${s.Host}">${s.Host}</td>
 					
 					<td>${s.counted}</td>
-					<td><button onClick="window.open('/export?msg_id=${msg_id}&fileID=${s.Host}')">Package For VM</button></td>
+					<td><button onClick="window.open('/export?type=web&msg_id=${msg_id}&webID=${s.Host}')">Package For VM</button></td>
 				</tr>
 % endfor
-			</tbody>
 		</table>
-		<p>&nbsp;</p>
-		
-		
-		<h3>Comments</h3>
-% for comment in comments:		
-		
-		<p>Title:  ${comment.title}</p>
-		<p>Comment: ${comment.freetext}</p>
+</div>
+</div>		
+      <div class="divider_silver" style="width:80%;"></div>
+      
+ <h4 style="cursor:pointer;" class="toggler" id="toggler-slideSix">
+	<span class="expandSlider">+ Show Case Files</span><span class="collapseSlider">- Hide Case Files</span>
+</h4>
 
-% endfor			
+ <div class="slider" id="slideSix">
+ <p>The following files have been added</p>      
+<div class="case_files">
+
+% if caseFiles != None:
+% for file in caseFiles:
+<p><a href="/export?type=file&msg_id=${msg_id}&fileID=${file}">${file} Download</a></p>
+% endfor
+% endif
+<p>To add more files use the file submission form here</p>
+		<form action="/upload" target="frame_success" method="post" enctype="multipart/form-data" name="upload">
+			<p><input name ="data" type="file" /></p>
+			<p><input type="hidden" name="msg_id" type="text" value="${msg_id}" /></p>
+			<p><input name="submit" type="submit" value="Submit" /></p>
+		</form>
+</div>
+</div>
+
+<iframe name="frame_success" width="0" height="0" style="display:none;"></iframe>	
+      <div class="divider_silver" style="width:80%;"></div>
+		<p>Comments</p>
+% for comment in comments:
+            <div class="comments">
+      <p>Title: ${comment.title}</p>
+      <p>${comment.freetext}</p>
+      <span class="edit"><a href="/edit?section=comment&commID=${comment.rowid}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false">Edit</a></span></p>
+     </div>
+% endfor
+       <p> <a href="/review?ID=${msg_id}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" class="button">New Comment</a></p>	
+			
 <%
 next = int(msg_id) + 1
 prev = int(msg_id) - 1
 %>
+
 			<p style="text-align: center;">
-				<a href="/sig/${prev}"> Prev</a> | <a href="/review?ID=${msg_id}&flag=review" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Review</a>| <a href="/review?ID=${msg_id}&flag=event" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Event</a>| <a href="/review?ID=${msg_id}&flag=clear" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Clear</a>| <a href="/sig/${next}">Next</a></p>
+				<a href="/sig/${prev}"> Prev</a> | <a href="/review?ID=${msg_id}&flag=review" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Review</a> | <a href="/review?ID=${msg_id}&flag=event" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Event</a> | <a href="/review?ID=${msg_id}&flag=clear" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" >Clear</a> | <a href="/sig/${next}">Next </a></p>
 		
 		
 		

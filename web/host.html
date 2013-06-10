@@ -7,15 +7,14 @@
 
 </%def>
 
-<h1>File Information for HostName Here</h1>
+<h1>HTTP Header Information</h1>
 
 
 
 
-
-<table border="1" width="1500">
-<tbody>
-<tr><td>path</td><td>referer</td><td>response</td><td>Credentials</td></tr>
+<div class="main_Table" >
+<table>
+<tr><td>Path</td><td>Referer</td><td>Response</td><td>Credentials</td></tr>
 
 
 % for h in hostInfo:
@@ -25,17 +24,8 @@
 		<td>${h.Response}</td>
 		<td>${h.Proxy}</td>		
 	</tr>
-</tbody>
 
-
-
-</div>
 % endfor
-
-<div id="Dynamic">
-<p class="Title">Dynamic Analysis</p>
-
-</div>
-
+</table>
 
 

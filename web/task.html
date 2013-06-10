@@ -15,27 +15,49 @@ popupWindow = window.open(url,winName,settings)
 }
 </script>
 </%def>
-
-<h1>${info.Comment} Scanned on Date ${info.date_added}</h1>
+% if info.Revmatch == 2:
+      <h2><span class="reviewed" align="center">
+% elif info.Revmatch == 1:
+      <h2><span class="event" align="center">
+% else:
+	<h2><span class="title" align="center">	
+% endif      
+${info.Comment} Submitted on ${info.date_added}</span></h2>
 		
 
 			
 		<h3>Tasking</h3>
 		
-<p>Manual Task Submitted. Any Tasking Files can be found in the following Folder </p>
-<p>LInk to files here</p>
+<p>Manual Task Submitted.</p>
+
+<div class="case_files">
+<p>The following files have been added</p>
+% if caseFiles != None:
+% for file in caseFiles:
+<p><a href="/export?type=file&msg_id=${msg_id}&fileID=${file}">${file} Download</a></p>
+% endfor
+%endif
 <p>To add more files use the file submission form here</p>
+		<form action="/upload" target="frame_success" method="post" enctype="multipart/form-data" name="upload">
+			<p><input name ="data" type="file" /></p>
+			<p><input type="hidden" name="msg_id" type="text" value="${msg_id}" /></p>
+			<p><input name="submit" type="submit" value="Submit" class="button"/></p>
+		</form>
+</div>
+</div>
 
-
+<iframe name="frame_success" width="0" height="0"></iframe>		
 		
-		
-		<h3>Comments</h3>
-% for comment in comments:		
-		
-		<p>Title:  ${comment.title}</p>
-		<p>Comment: ${comment.freetext}</p>
-
-% endfor			
+      <div class="divider_silver" style="width:80%;"></div>
+		<p>Comments</p>
+% for comment in comments:
+            <div class="comments">
+      <p>Title: ${comment.title}</p>
+      <p>${comment.freetext}</p>
+      <span class="edit"><a href="/edit?section=comment&commID=${comment.rowid}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false">Edit</a></span></p>
+     </div>
+% endfor
+       <p> <a href="/review?ID=${msg_id}" onclick="centeredPopup(this.href,'myWindow','500','300','yes');return false" class="button">New Comment</a></p>			
 <%
 next = int(msg_id) + 1
 prev = int(msg_id) - 1

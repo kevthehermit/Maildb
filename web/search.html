@@ -4,12 +4,15 @@
 <%def name="title()">Search Page</%def>
 
 <%def name="head_tags()"></%def>
-<script src="/static/dropdown.js"></script>
+<script src="/static/js/dropdown.js"></script>
 <h1>Search Page</h1>
 
+<p><a href="/results?Term=0&optone=main&opttwo=Revmatch" class="button">Outstanding</a>&nbsp;- Show Non-Reviewed Items</p>
+<p><a href="/results?Term=1&optone=main&opttwo=Revmatch" class="button">Events</a>&nbsp;- Show All Events</p>
 
 
-<form name="myform" action="/results" method="post" enctype="multipart/form-data">
+
+<form name="myform" action="/results" method="GET" enctype="multipart/form-data">
 Search Term:<input type="text" name="Term" />
 Table:<select name="optone" size="1"
 onchange="setOptions(document.myform.optone.options
@@ -20,6 +23,7 @@ onchange="setOptions(document.myform.optone.options
 <option value="header">Email Headers</option>
 <option value="hops">Email Hops</option>
 <option value="attatch">Attatchments</option>
+<option value="links">Links</option>
 <option value="flows">Http Flows</option>
 <option value="streams">Http Sessions</option>
 <option value="yara">Yara</option>

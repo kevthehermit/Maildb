@@ -38,7 +38,9 @@ Requires:
 Recommended:
 ============
 
-- SSDEEP 
+- Cuckoo
+- SSDEEP
+- python requests required for Cuckoo API 
 
 INSTALL:
 =========

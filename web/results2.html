@@ -29,23 +29,23 @@ $(document).ready(function(){
 
 <tbody>
 % for result in rows:
-	% if result[3] == 1:
+	% if result.Revmatch == 1:
 	<tr class="true">
-	% elif result[3] == 2:
+	% elif result.Revmatch == 2:
 	<tr class="false">
-	% elif result[3] == 3:
+	% elif result.Revmatch == 3:
 	<tr class="yara">
 	% else:
 	<tr>
 	% endif:
 		
 		
-		<td><a href="/sig/${result[0]}">${result[0]}</a></td>
-		<td>${result[5]}</td>
-		<td>${result[2]}</td>
-		<td>${result[1]}</td>
-		<td>${result[4]}</td>
-		<td>${result[6]}</td>
+		<td><a href="/sig/${result.msg_id}">${result.msg_id}</a></td>
+		<td>${result.Comment}</td>
+		<td>${result.eml_md5}</td>
+		<td>${result.date_added}</td>
+		<td>${result.attCount}</td>
+		<td>${result.type}</td>
 	</tr>
 </tbody>
 % endfor

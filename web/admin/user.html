@@ -1,0 +1,53 @@
+# -*- coding: utf-8 -*-
+<%inherit file="base.mako" />
+
+<%def name="title()">User Interface</%def>
+
+<%def name="head_tags()"></%def>
+		<p>User Panel</p>
+		<p>Logged in as:${currentUser}</p>
+		<p>Last Login:</p>
+		
+		<p>All Games:</p>
+		<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+			<tbody>
+				<tr>
+					<td>Game</td>
+					<td>Description</td>
+					<td>Open To Play</td>
+					<td>View LeaderBoard</td>
+					<td>Register</td>
+				</tr>
+%for row in gameList:
+				<tr>
+					<td>${row.GameName}</td>
+					<td>${row.GameDescription}</td>
+					<td>${row.GameEnable}</td>
+					<td><a href="/score?GameID=${row.GameID}">LeaderBoard</a></td>
+					<td><a href="/register?GameID=${row.GameID}">register</a></td>
+				</tr>
+%endfor				
+			</tbody>
+		</table>		
+		
+		<p>Registered:</p>
+		<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+			<tbody>
+				<tr>
+					<td>Game</td>
+					<td>Description</td>
+					<td>Current Score</td>
+					<td>View LeaderBoard</td>
+					<td>Play Game</td>
+				</tr>
+%for row in usersGames:
+				<tr>
+					<td>${row.GameName}</td>
+					<td>${row.GameDescription}</td>
+					<td>${row.Score}</td>
+					<td><a href="/score?GameID=${row.GameID}">LeaderBoard</a></td>
+					<td><a href="/game?GameID=${row.GameID}&LevelID=1">Play Game</a></td>
+				</tr>
+%endfor				
+			</tbody>
+		</table>

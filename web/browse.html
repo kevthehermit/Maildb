@@ -4,7 +4,7 @@
 <%def name="title()">All Samples</%def>
 
 <%def name="head_tags()">
-<script src="/static/jquery.min.js"></script>
+<script src="/static/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
 
@@ -20,11 +20,9 @@ $(document).ready(function(){
 </%def>
 
 
-
-<h1>Emails</h1>
-
+<div>
 <table id="browse">
-<thead><tr><th>ID</th><th>Comment</th><th>MD5</th><th>Date Of Scan</th><th>No Of Attatch</th><th>Type</th><thead>
+<thead><tr><th>ID</th><th>Comment</th><th>MD5</th><th>Date Of Scan</th><th>No Of Attatch</th><th>Type</th></thead>
 
 <tbody>
 % for r in rows:
@@ -46,11 +44,14 @@ $(document).ready(function(){
 		<td>${r.attCount}</td>
 		<td>${r.type}</td>
 	</tr>
-</tbody>
+
 % endfor
+</tbody>
+</table>
 <%
 next = int(offset) + int(limit)
 prev = int(offset) - int(limit)
 
 %>
-<p align="center"><a href="/browse?limit=${limit}&offset=${prev}">Next </a> | <a href="/browse?limit=${limit}&offset=${next}">Prev </a></p>
+</div>
+<p align="center"><a href="/browse?limit=${limit}&offset=${prev}">< Next </a> | <a href="/browse?limit=${limit}&offset=${next}">Prev > </a></p>
