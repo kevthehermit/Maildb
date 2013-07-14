@@ -9,7 +9,7 @@ import os
 
 ##### Version #####
 
-version = '0.4.4'
+version = '0.4.5'
 development = True
 
 ##### Settings ######
@@ -36,7 +36,7 @@ dblocation = os.path.join(MaildbRoot, "clam", "clam.db")
 ##### Yara #####
 
 enableYara = '1'
-yaraRuleFile = os.path.join(MaildbRoot, "yara", "ye_all.yar")
+yaraRuleFile = os.path.join(MaildbRoot, "yara", "index.yar")
 
 ##### Virus Total#####
 # Not Implemented Yet
@@ -47,7 +47,7 @@ vtapikey=''
 
 ## Cuckoo
 enableCuckoo = '1'
-cuckooUrl = "localhost"
+cuckooUrl = "192.168.0.21"
 cuckooPort = "8090"
 cuckooMachine = "SandBox_Win7"
 
