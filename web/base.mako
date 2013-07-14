@@ -47,7 +47,7 @@ ${self.head_tags()}
       <ul>
          <li><a href='/help'><span>Help</span></a></li>
          <li><a href='/decode'><span>Decode Tools</span></a></li>
-         <li><a href='/useradmin'><span>User Accounts</span></a></li>
+         <li><a href='/useradmin'><span>Accounts</span></a></li>
          <li class='last'><a href='/admin'><span>Admin Tools</span></a></li>
       </ul>
    </li>

@@ -69,7 +69,6 @@ class Maildatabase:
 		if key.seq == 0:
 			return 1
 		else:
-			print key.seq + 1
 			return key.seq + 1
 		
 			
@@ -307,6 +306,7 @@ class Maildatabase:
 	
 	def parseHeader(self, sql):
 		conn = sqlite3.connect(self.db_file, timeout=60)
+		conn.text_factory = str
 		cursor = conn.cursor()
 		cursor.execute('INSERT INTO header VALUES (?,?,?,?,?,?,?,?,?,?,?)', sql)
 		conn.commit()

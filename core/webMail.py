@@ -17,6 +17,7 @@ db=Maildatabase()
 class imapMail():
 	def getIMAP(self, user, pwd, server, inbox):
 		tmpDir = tempfile.mkdtemp()
+		print tmpDir
 		m = imaplib.IMAP4_SSL(server)
 		m.login(user,pwd)
 		m.select(inbox)
@@ -28,14 +29,14 @@ class imapMail():
 		counter = 0
 		for emailid in items:
 			emailFile = os.path.join(tmpDir, inbox+emailid + ".txt")
+			print emailFile
 			counter +=1
 			resp, data = m.fetch(emailid, "(RFC822)")
 			email_body = data[0][1]
-			msgFile = open(emailFile, "w")
-			msgFile.write(email_body)
-			msgFile.close()
+			with open(emailFile, "w+") as msgFile:
+				msgFile.write(email_body)
 			newPath = db.lastLine()
-			reportDir = os.path.join(reportRoot, newPath)
+			reportDir = os.path.join(reportRoot, str(newPath))
 			if not os.path.exists(reportDir):
 				os.makedirs(reportDir) #Create the Dir Structure
 				os.makedirs(os.path.join(reportDir, "attatchments"))
@@ -44,9 +45,10 @@ class imapMail():
 			emlName = os.path.join(reportDir, "message.eml") # Name of the eml to pass over to the parse script
 			parseRun = emlParse(emlName, reportDir, comment) # Call the parse script
 			parseRun.run()
-			shutil.rmtree(tmpDir)
+		shutil.rmtree(tmpDir)
 
 	def getPOP(self, user, pwd, server):
+		tmpDir = tempfile.mkdtemp()
 		m = poplib.POP3_SSL(server)
 		m.user(user)
 		m.pass_(pwd)
@@ -56,14 +58,14 @@ class imapMail():
 		counter = 0
 		for email in range(emailCount):
 			counter +=1
-			emailFile = os.path.join(transferDir, server+str(counter) + ".txt")
+			emailFile = os.path.join(tmpDir, server+str(counter) + ".txt")
 			msgFile = open(emailFile, "w")
 			for msg in m.retr(email+1)[1]:				
 				msgFile.write(msg)
 				msgFile.write("\n")
 			msgFile.close()
 			newPath = db.lastLine()
-			reportDir = os.path.join(reportRoot, newPath)
+			reportDir = os.path.join(reportRoot, str(newPath))
 			if not os.path.exists(reportDir):
 				os.makedirs(reportDir) #Create the Dir Structure
 				os.makedirs(os.path.join(reportDir, "attatchments"))
@@ -72,3 +74,4 @@ class imapMail():
 			emlName = os.path.join(reportDir, "message.eml") # Name of the eml to pass over to the parse script
 			parseRun = emlParse(emlName, reportDir, comment) # Call the parse script
 			parseRun.run()
+		shutil.rmtree(tmpDir)

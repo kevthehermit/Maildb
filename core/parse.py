@@ -48,12 +48,18 @@ class emlParse(object):
 		dateLine = msg.get('Date')
 		
 		msg_id = int(os.path.basename(self.reportDir)) # Unique id for this email used to cross ref other tables
-		fromAdd = msg['from'] # might need to tidy this up a little bit using the address parse option
+		try:
+			fromAdd = msg['from'] # might need to tidy this up a little bit using the address parse option
+		except:
+			fromAdd = msg['from']
 		stringIt = str(fromAdd)
 		dbFrom = stringIt[stringIt.find("<")+1:stringIt.find(">")]
 		# very messy need to fix this.
 		addDomain = dbFrom[dbFrom.find("@")+1:] 
-		subjectLine = msg['subject']
+		try:
+			subjectLine = unicode(msg['subject'], errors = 'replace')
+		except:
+			subjectLine = msg['subject']
 		x_mailer = msg['X-Mailer']
 		x_priority = msg['X-Priority']
 		try:

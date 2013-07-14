@@ -444,12 +444,12 @@ def imapFetch():
 	server = request.forms.server
 	inbox = request.forms.inbox
 	protocol = request.forms.protocol
-	import core.webMail
-	print "here"
+	from core.webMail import imapMail
+	mailFetch = imapMail()
 	if protocol == 'imap':
-		core.webMail().getIMAP(usr, pwd, server, inbox)
+		mailFetch.getIMAP(usr, pwd, server, inbox)
 	elif protocol == 'pop':
-		core.webMail().getPOP(usr, pwd, server)
+		mailFetch.getPOP(usr, pwd, server)
 	redirect("/browse")
 
 
